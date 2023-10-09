@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Charge_Type cascade;

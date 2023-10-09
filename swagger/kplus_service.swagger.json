@@ -1,0 +1,1579 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "kplus_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "KPlusService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/kplus/v1/FundTransfer": {
+      "post": {
+        "operationId": "KPlusService_FundTransferRequest",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSFundTransferRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/LoanInfo": {
+      "post": {
+        "operationId": "KPlusService_LoanInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSLoanInfoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSAccRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/SearchCustomerCID": {
+      "post": {
+        "summary": "kPLUS Services",
+        "operationId": "KPlusService_SearchCustomerCID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSCustomerResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSCustomerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/custSavingsList": {
+      "post": {
+        "operationId": "KPlusService_CustSavingsList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSCustSavingsListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSCustomerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/generateColShtperCID": {
+      "post": {
+        "operationId": "KPlusService_GenerateColShtperCID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSGenerateColShtperCIDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSCustomerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/getReferences": {
+      "post": {
+        "operationId": "KPlusService_GetReferences",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSGetReferencesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSGetReferencesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/getSavingForSuperApp": {
+      "post": {
+        "operationId": "KPlusService_GetSavingForSuperApp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSGetSavingResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSCustomerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/getTransactionHistory": {
+      "post": {
+        "operationId": "KPlusService_GetTransactionHistory",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSGetTransactionHistoryResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSGetTransactionHistoryRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/k2cCallBackRef": {
+      "post": {
+        "operationId": "KPlusService_K2CCallBackRef",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSCallBackRefRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/multiplePayment": {
+      "post": {
+        "operationId": "KPlusService_MultiplePayment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSMultiplePaymentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/kplus/v1/searchLoanList": {
+      "post": {
+        "operationId": "KPlusService_SearchLoanList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSSearchLoanListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankKPLUSCustomerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    },
+    "/v1/echo": {
+      "post": {
+        "summary": "Sends a greeting",
+        "operationId": "KPlusService_SayHello",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankHelloReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankHelloRequest"
+            }
+          }
+        ],
+        "tags": [
+          "KPlusService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "simplebankHelloReply": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "The response message containing the greetings"
+    },
+    "simplebankHelloRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "The request message containing the user's name"
+    },
+    "simplebankKPLUSAccRequest": {
+      "type": "object",
+      "properties": {
+        "num": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSAddressInfo": {
+      "type": "object",
+      "properties": {
+        "iiid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "series": {
+          "type": "string",
+          "format": "int64"
+        },
+        "addressTypeID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "addressType": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        },
+        "barangay": {
+          "type": "string"
+        },
+        "municipality": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSAmort": {
+      "type": "object",
+      "properties": {
+        "dnum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "dueDate": {
+          "type": "string"
+        },
+        "instFlag": {
+          "type": "string",
+          "format": "int64"
+        },
+        "prin": {
+          "type": "number",
+          "format": "double"
+        },
+        "intr": {
+          "type": "number",
+          "format": "double"
+        },
+        "oth": {
+          "type": "number",
+          "format": "double"
+        },
+        "penalty": {
+          "type": "number",
+          "format": "double"
+        },
+        "endBal": {
+          "type": "number",
+          "format": "double"
+        },
+        "endInt": {
+          "type": "number",
+          "format": "double"
+        },
+        "endOth": {
+          "type": "number",
+          "format": "double"
+        },
+        "instPd": {
+          "type": "number",
+          "format": "double"
+        },
+        "penPd": {
+          "type": "number",
+          "format": "double"
+        },
+        "carVal": {
+          "type": "number",
+          "format": "double"
+        },
+        "upInt": {
+          "type": "number",
+          "format": "double"
+        },
+        "servFee": {
+          "type": "number",
+          "format": "double"
+        },
+        "pledgeAmort": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "simplebankKPLUSCallBackRefRequest": {
+      "type": "object",
+      "properties": {
+        "prNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSCharge": {
+      "type": "object",
+      "properties": {
+        "chargeTypeId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "chargeType": {
+          "type": "string"
+        },
+        "refAcc": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "simplebankKPLUSCharges": {
+      "type": "object",
+      "properties": {
+        "acc": {
+          "type": "string"
+        },
+        "charges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSCharge"
+          }
+        }
+      }
+    },
+    "simplebankKPLUSColShtperCID": {
+      "type": "object",
+      "properties": {
+        "iNAIIID": {
+          "type": "string"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "appType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "code": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "statusDesc": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "iiid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "customerId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "centralOfficeId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "uM": {
+          "type": "string"
+        },
+        "clientName": {
+          "type": "string"
+        },
+        "centerCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "centerName": {
+          "type": "string"
+        },
+        "manCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "areaCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "area": {
+          "type": "string"
+        },
+        "staffName": {
+          "type": "string"
+        },
+        "acctType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "acctDesc": {
+          "type": "string"
+        },
+        "disbDate": {
+          "type": "string"
+        },
+        "dateStart": {
+          "type": "string"
+        },
+        "maturity": {
+          "type": "string"
+        },
+        "principal": {
+          "type": "number",
+          "format": "double"
+        },
+        "interest": {
+          "type": "number",
+          "format": "double"
+        },
+        "gives": {
+          "type": "string",
+          "format": "int64"
+        },
+        "ibalPrin": {
+          "type": "number",
+          "format": "double"
+        },
+        "ibalInt": {
+          "type": "number",
+          "format": "double"
+        },
+        "balPrin": {
+          "type": "number",
+          "format": "double"
+        },
+        "balInt": {
+          "type": "number",
+          "format": "double"
+        },
+        "amort": {
+          "type": "number",
+          "format": "double"
+        },
+        "duePrin": {
+          "type": "number",
+          "format": "double"
+        },
+        "dueInt": {
+          "type": "number",
+          "format": "double"
+        },
+        "loanBal": {
+          "type": "number",
+          "format": "double"
+        },
+        "saveBal": {
+          "type": "number",
+          "format": "double"
+        },
+        "waivedInt": {
+          "type": "number",
+          "format": "double"
+        },
+        "unPaidCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "writenOff": {
+          "type": "string",
+          "format": "int64"
+        },
+        "classification": {
+          "type": "string",
+          "format": "int64"
+        },
+        "classDesc": {
+          "type": "string",
+          "format": "int64"
+        },
+        "writeOff": {
+          "type": "string",
+          "format": "int64"
+        },
+        "pay": {
+          "type": "number",
+          "format": "double"
+        },
+        "withdraw": {
+          "type": "number",
+          "format": "double"
+        },
+        "type": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orgName": {
+          "type": "string"
+        },
+        "orgAddress": {
+          "type": "string"
+        },
+        "meetingDate": {
+          "type": "string"
+        },
+        "meetingDay": {
+          "type": "string",
+          "format": "int64"
+        },
+        "sharesOfStock": {
+          "type": "number",
+          "format": "double"
+        },
+        "dateEstablished": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSContact": {
+      "type": "object",
+      "properties": {
+        "iiid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "series": {
+          "type": "string",
+          "format": "int64"
+        },
+        "contactTypeID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "contactType": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSCustSavingsList": {
+      "type": "object",
+      "properties": {
+        "cid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "acctType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "accDesc": {
+          "type": "string"
+        },
+        "dopen": {
+          "type": "string"
+        },
+        "statusDesc": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "number",
+          "format": "double"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankKPLUSCustSavingsListResponse": {
+      "type": "object",
+      "properties": {
+        "custSavingsList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSCustSavingsList"
+          }
+        }
+      }
+    },
+    "simplebankKPLUSCustomerRequest": {
+      "type": "object",
+      "properties": {
+        "cid": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankKPLUSCustomerResponse": {
+      "type": "object",
+      "properties": {
+        "cid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "maidenFName": {
+          "type": "string"
+        },
+        "maidenLName": {
+          "type": "string"
+        },
+        "maidenMName": {
+          "type": "string"
+        },
+        "doBirth": {
+          "type": "string"
+        },
+        "birthPlace": {
+          "type": "string"
+        },
+        "sex": {
+          "type": "string"
+        },
+        "civilStatus": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "statusDesc": {
+          "type": "string"
+        },
+        "classification": {
+          "type": "string",
+          "format": "int64"
+        },
+        "classificationDesc": {
+          "type": "string"
+        },
+        "subClassification": {
+          "type": "string",
+          "format": "int64"
+        },
+        "subClassificationDesc": {
+          "type": "string"
+        },
+        "business": {
+          "type": "string"
+        },
+        "doEntry": {
+          "type": "string"
+        },
+        "doRecognized": {
+          "type": "string"
+        },
+        "doResigned": {
+          "type": "string"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "branchName": {
+          "type": "string"
+        },
+        "unitCode": {
+          "type": "string"
+        },
+        "unitName": {
+          "type": "string"
+        },
+        "centerCode": {
+          "type": "string"
+        },
+        "centerName": {
+          "type": "string"
+        },
+        "dosri": {
+          "type": "boolean"
+        },
+        "reffered": {
+          "type": "string"
+        },
+        "remarks": {
+          "type": "string"
+        },
+        "accountNumber": {
+          "type": "string"
+        },
+        "searchName": {
+          "type": "string"
+        },
+        "address": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSAddressInfo"
+          }
+        },
+        "contact": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSContact"
+          }
+        },
+        "memberMaidenFName": {
+          "type": "string"
+        },
+        "memberMaidenLName": {
+          "type": "string"
+        },
+        "memberMaidenMName": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSFundTransferRequest": {
+      "type": "object",
+      "properties": {
+        "sourceAccount": {
+          "type": "string"
+        },
+        "targetAccount": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double"
+        },
+        "username": {
+          "type": "string"
+        },
+        "trnReference": {
+          "type": "string"
+        },
+        "particulars": {
+          "type": "string"
+        },
+        "transFee": {
+          "type": "number",
+          "format": "double"
+        },
+        "transFeeParticulars": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSGenerateColShtperCIDResponse": {
+      "type": "object",
+      "properties": {
+        "KPLUSColShtperCID": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSColShtperCID"
+          }
+        }
+      }
+    },
+    "simplebankKPLUSGetReferencesRequest": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSGetReferencesResponse": {
+      "type": "object",
+      "properties": {
+        "references": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSReferences"
+          }
+        }
+      }
+    },
+    "simplebankKPLUSGetSavingResponse": {
+      "type": "object",
+      "properties": {
+        "SavingInfo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSSavingInfo"
+          }
+        }
+      }
+    },
+    "simplebankKPLUSGetTransactionHistoryRequest": {
+      "type": "object",
+      "properties": {
+        "acc": {
+          "type": "string"
+        },
+        "dateFrom": {
+          "type": "string"
+        },
+        "dateTo": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSGetTransactionHistoryResponse": {
+      "type": "object",
+      "properties": {
+        "transaction": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSTransaction"
+          }
+        }
+      }
+    },
+    "simplebankKPLUSLoan": {
+      "type": "object",
+      "properties": {
+        "acc": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "dateRelease": {
+          "type": "string"
+        },
+        "acctType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "principal": {
+          "type": "number",
+          "format": "double"
+        },
+        "interest": {
+          "type": "number",
+          "format": "double"
+        },
+        "oth": {
+          "type": "number",
+          "format": "double"
+        },
+        "balance": {
+          "type": "number",
+          "format": "double"
+        },
+        "term": {
+          "type": "string",
+          "format": "int64"
+        },
+        "paidTerm": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankKPLUSLoanInfo": {
+      "type": "object",
+      "properties": {
+        "cid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "appType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "acctType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "accdesc": {
+          "type": "string"
+        },
+        "dopen": {
+          "type": "string"
+        },
+        "domaturity": {
+          "type": "string"
+        },
+        "term": {
+          "type": "string",
+          "format": "int64"
+        },
+        "weekspaid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "principal": {
+          "type": "number",
+          "format": "double"
+        },
+        "interest": {
+          "type": "number",
+          "format": "double"
+        },
+        "others": {
+          "type": "number",
+          "format": "double"
+        },
+        "discounted": {
+          "type": "number",
+          "format": "double"
+        },
+        "netproceed": {
+          "type": "number",
+          "format": "double"
+        },
+        "balance": {
+          "type": "number",
+          "format": "double"
+        },
+        "prin": {
+          "type": "number",
+          "format": "double"
+        },
+        "intr": {
+          "type": "number",
+          "format": "double"
+        },
+        "oth": {
+          "type": "number",
+          "format": "double"
+        },
+        "penalty": {
+          "type": "number",
+          "format": "double"
+        },
+        "waivedint": {
+          "type": "number",
+          "format": "double"
+        },
+        "disbby": {
+          "type": "string"
+        },
+        "approvby": {
+          "type": "string"
+        },
+        "cycle": {
+          "type": "string",
+          "format": "int64"
+        },
+        "frequency": {
+          "type": "string",
+          "format": "int64"
+        },
+        "annumdiv": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lngrpcode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "proff": {
+          "type": "string",
+          "format": "int64"
+        },
+        "fundsource": {
+          "type": "string",
+          "format": "int64"
+        },
+        "conintrate": {
+          "type": "number",
+          "format": "double"
+        },
+        "amortcond": {
+          "type": "string",
+          "format": "int64"
+        },
+        "amortcondvalue": {
+          "type": "number",
+          "format": "double"
+        },
+        "classificationCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "classificationType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "remarks": {
+          "type": "string"
+        },
+        "amort": {
+          "type": "number",
+          "format": "double"
+        },
+        "isLumpsum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "loanID": {
+          "type": "string"
+        },
+        "amortList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSAmort"
+          }
+        },
+        "charges": {
+          "$ref": "#/definitions/simplebankKPLUSCharges"
+        }
+      }
+    },
+    "simplebankKPLUSLoanInfoResponse": {
+      "type": "object",
+      "properties": {
+        "loanInfo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSLoanInfo"
+          }
+        }
+      }
+    },
+    "simplebankKPLUSMultiplePaymentRequest": {
+      "type": "object",
+      "properties": {
+        "remitterCID": {
+          "type": "string"
+        },
+        "prNumber": {
+          "type": "string"
+        },
+        "sourceId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orNumber": {
+          "type": "string",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "trndate": {
+          "type": "string"
+        },
+        "totalCollection": {
+          "type": "number",
+          "format": "double"
+        },
+        "particulars": {
+          "type": "string"
+        },
+        "payment": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSPayment"
+          }
+        }
+      }
+    },
+    "simplebankKPLUSPayment": {
+      "type": "object",
+      "properties": {
+        "acc": {
+          "type": "string"
+        },
+        "pay": {
+          "type": "number",
+          "format": "double"
+        },
+        "withdraw": {
+          "type": "number",
+          "format": "double"
+        },
+        "appType": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankKPLUSReferences": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refType": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string",
+          "format": "int64"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "ownerRID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "statusID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "refTypeID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refTypeRID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refTypeTitle": {
+          "type": "string"
+        },
+        "refID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refRID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "parentID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refTypeParentID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refTypeParent": {
+          "type": "string"
+        },
+        "refTypeTitleParent": {
+          "type": "string"
+        },
+        "xml": {
+          "type": "string"
+        },
+        "parent": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSResponse": {
+      "type": "object",
+      "properties": {
+        "retCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "message": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankKPLUSSavingInfo": {
+      "type": "object",
+      "properties": {
+        "cid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "number",
+          "format": "double"
+        },
+        "withdrawable": {
+          "type": "number",
+          "format": "double"
+        },
+        "centerCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "unitCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "centerName": {
+          "type": "string"
+        },
+        "unitName": {
+          "type": "string"
+        },
+        "withdrawalAmount": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "simplebankKPLUSSearchLoanListResponse": {
+      "type": "object",
+      "properties": {
+        "loan": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankKPLUSLoan"
+          }
+        }
+      }
+    },
+    "simplebankKPLUSTransaction": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "trndate": {
+          "type": "string"
+        },
+        "trnHeadId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "trn": {
+          "type": "string",
+          "format": "int64"
+        },
+        "alternateKey": {
+          "type": "string"
+        },
+        "prin": {
+          "type": "number",
+          "format": "double"
+        },
+        "intr": {
+          "type": "number",
+          "format": "double"
+        },
+        "trnAmount": {
+          "type": "number",
+          "format": "double"
+        },
+        "balPrin": {
+          "type": "number",
+          "format": "double"
+        },
+        "balInt": {
+          "type": "number",
+          "format": "double"
+        },
+        "balance": {
+          "type": "number",
+          "format": "double"
+        },
+        "particulars": {
+          "type": "string"
+        },
+        "trnType": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "isFinancial": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

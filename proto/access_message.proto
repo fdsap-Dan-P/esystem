@@ -1,0 +1,55 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+
+message AccessAccountType {
+  string uuid = 1;
+  int64 roleId = 2;
+  int64 typeId = 3;
+  bool allow = 4;
+  NullString otherInfo = 5;
+}
+
+message AccessConfig {
+  string uuid = 1;
+  int64 accessRoleId = 2;
+  int64 accessConfigId = 3;
+  int64 valueInt = 4;
+  string valueDecimal = 5;
+  google.protobuf.Timestamp valueDate = 6;
+  string valueString = 7;
+  NullString otherInfo = 8;
+}
+
+message AccessObject {
+  string uuid = 1;
+  int64 accessRoleId = 2;
+  int64 accessObjectId = 3;
+  bool allow = 4;
+  string maxValue = 5;
+  NullString otherInfo = 6;
+}
+
+message AccessProduct {
+  string uuid = 1;
+  int64 roleId = 2;
+  int64 productId = 3;
+  bool allow = 4;
+  NullString otherInfo = 5;
+}
+
+message AccessRole {
+  int64 iD = 1;
+  string uuid = 2;
+  string accessName = 3;
+  string description = 4;
+  NullString otherInfo = 5;
+}

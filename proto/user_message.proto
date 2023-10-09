@@ -1,0 +1,70 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message UserAccountType {
+  string uuid = 1;
+  int64 userId = 2;
+  int64 typeId = 3;
+  bool allow = 4;
+  NullString otherInfo = 5;
+}
+message UserConfig {
+  string uuid = 1;
+  int64 userId = 2;
+  int64 accessConfigId = 3;
+  NullInt64 valueInt = 4;
+  NullString valueDecimal = 5;
+  NullTime valueDate = 6;
+  NullString valueString = 7;
+  NullString otherInfo = 8;
+}
+
+message UserObject {
+  string uuid = 1;
+  int64 userId = 2;
+  int64 objectId = 3;
+  bool allow = 4;
+  NullString otherInfo = 5;
+}
+
+message UserOffice {
+  string uuid = 1;
+  int64 userId = 2;
+  int64 officeId = 3;
+  bool allow = 4;
+  NullString otherInfo = 5;
+}
+
+message UserProduct {
+  string uuid = 1;
+  int64 userId = 2;
+  int64 productId = 3;
+  bool allow = 4;
+  NullString otherInfo = 5;
+}
+
+message User {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 iiid = 3;
+  string loginName = 4;
+  string displayName = 5;
+  repeated bytes thumbnail = 6;
+  int64 accessRoleId = 7;
+  int64 statusCode = 8;
+  NullTime dateGiven = 9;
+  NullTime dateExpired = 10;
+  NullTime dateLocked = 11;
+  NullTime passwordChangedAt = 12;
+  string userPassword = 13;
+  int32 attempt = 14;
+  NullBool isloggedin = 15;
+  NullString otherInfo = 16;
+}

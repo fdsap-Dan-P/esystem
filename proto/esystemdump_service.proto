@@ -1,0 +1,398 @@
+syntax = "proto3";
+
+package simplebank;
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "esystemdump_message.proto";
+import "google/api/annotations.proto";
+// import "google/protobuf/empty.proto";
+
+message GetModifiedTableRequest { 
+string brCode = 1; }
+message GetDumpBranchListRequest { 
+string brCode = 1; }
+message CreateDumpBranchListRequest { 
+DumpBranchList branchList = 1; }
+message UpdateDumpBranchListRequest { 
+
+  string brCode = 1; 
+  int64 ebSysDate =2;
+  int64 runState = 3;}
+message CreateDumpMultiplePaymentReceiptRequest { 
+DumpMultiplePaymentReceipt multiplePaymentReceipt = 1; }
+
+message CreateDumpInActiveCIDRequest { 
+  DumpInActiveCID inActiveCID = 1; }
+
+message CreateDumpReactivateWriteoffRequest { 
+  DumpReactivateWriteoff reactivateWriteoff = 1; }
+
+message CreateDumpLnBeneficiaryRequest { 
+  DumpLnBeneficiary lnBeneficiary = 1; }
+        
+message CreateDumpAreaRequest { 
+DumpArea area = 1; }
+message CreateDumpUnitRequest { 
+DumpUnit unit = 1; }
+message CreateDumpCenterRequest { 
+DumpCenter center = 1; }
+message CreateDumpCustomerRequest { 
+DumpCustomer customer = 1; }
+message CreateDumpAddressesRequest { 
+DumpAddresses addresses = 1; }
+message CreateDumpLnMasterRequest { 
+DumpLnMaster lnMaster = 1; }
+message CreateDumpSaMasterRequest { 
+DumpSaMaster saMaster = 1; }
+message CreateDumpTrnMasterRequest { 
+DumpTrnMaster TrnMaster = 1; }
+message CreateDumpSaTrnMasterRequest { 
+DumpSaTrnMaster saTrnMaster = 1; }
+message CreateDumpLoanInstRequest { 
+DumpLoanInst loanInst = 1; }
+message CreateDumpLnChrgDataRequest { 
+DumpLnChrgData lnChrgData = 1; }
+message CreateDumpCustAddInfoListRequest { 
+DumpCustAddInfoList custAddInfoList = 1; }
+message CreateDumpCustAddInfoGroupRequest { 
+DumpCustAddInfoGroup custAddInfoGroup = 1; }
+message CreateDumpCustAddInfoGroupNeedRequest { 
+DumpCustAddInfoGroupNeed custAddInfoGroupNeed = 1; }
+message CreateDumpCustAddInfoRequest { 
+DumpCustAddInfo custAddInfo = 1; }
+message CreateDumpMutualFundRequest { 
+DumpMutualFund mutualFund = 1; }
+message CreateDumpReferencesDetailsRequest { 
+DumpReferencesDetails referencesDetails = 1; }
+message CreateDumpCenterWorkerRequest { 
+DumpCenterWorker centerWorker = 1; }
+message CreateDumpWriteoffRequest { 
+DumpWriteoff writeoff = 1; }
+message CreateDumpAccountsRequest { 
+DumpAccounts accounts = 1; }
+message CreateDumpJnlDetailsRequest { 
+DumpJnlDetails jnlDetails = 1; }
+message CreateDumpJnlHeadersRequest { 
+DumpJnlHeaders jnlHeaders = 1; }
+message CreateDumpLedgerDetailsRequest { 
+DumpLedgerDetails ledgerDetails = 1; }
+message CreateDumpUsersListRequest { 
+DumpUsersList usersList = 1; }
+
+message CreateDumpBranchListResponse { 
+  string brCode = 1; }
+  message UpdateDumpBranchListResponse { 
+  string brCode = 1; }
+  
+message CreateDumpMultiplePaymentReceiptResponse { 
+repeated int64 modCtr = 1;  }
+message CreateDumpInActiveCIDResponse { 
+repeated int64 modCtr = 1;  }  
+message CreateDumpLnBeneficiaryResponse { 
+  repeated int64 modCtr = 1;  }  
+message CreateDumpReactivateWriteoffResponse { 
+  repeated int64 modCtr = 1;  }  
+message CreateDumpAreaResponse { 
+  repeated int64 modCtr = 1; }
+message CreateDumpUnitResponse { 
+  repeated int64 modCtr = 1; }
+message CreateDumpCenterResponse { 
+  repeated int64 modCtr = 1; }
+message CreateDumpCustomerResponse { 
+  repeated int64 modCtr = 1; }
+message CreateDumpAddressesResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpLnMasterResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpSaMasterResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpTrnMasterResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpSaTrnMasterResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpLoanInstResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpLnChrgDataResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpCustAddInfoListResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpCustAddInfoGroupResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpCustAddInfoGroupNeedResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpCustAddInfoResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpMutualFundResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpReferencesDetailsResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpCenterWorkerResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpWriteoffResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpAccountsResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpJnlDetailsResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpJnlHeadersResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpLedgerDetailsResponse { 
+repeated int64 modCtr = 1; }
+message CreateDumpUsersListResponse { 
+repeated int64 modCtr = 1; }
+
+
+message CreateDumpColShtRequest { DumpColSht colSht = 1; }
+message CreateDumpColShtResponse { repeated string acc = 1; }
+
+service DumpService {
+  
+  rpc GetModifiedTable(GetModifiedTableRequest) returns (stream DumpModifiedTable) {
+    option (google.api.http) = {
+      post : "/v1/DumpModifiedTable"
+      body : "*"
+    };
+  };
+
+  rpc GetDumpBranchList(GetDumpBranchListRequest) returns (DumpBranchList) {
+    option (google.api.http) = {
+      post : "/v1/DumpBranchList/get"
+      body : "*"
+    };
+  };
+
+  rpc ListDumpBranchList(noParam) returns (stream DumpBranchList) {
+    option (google.api.http) = {
+      post : "/v1/DumpBranchList"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpBranchList(CreateDumpBranchListRequest) returns (CreateDumpBranchListResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpBranchList/create"
+      body : "*"
+    };
+  };
+
+  rpc UpdateDumpBranchList(UpdateDumpBranchListRequest) returns (UpdateDumpBranchListResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpBranchList/update"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpArea(stream CreateDumpAreaRequest) returns (stream CreateDumpAreaResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpArea/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpUnit(stream CreateDumpUnitRequest) returns (stream CreateDumpUnitResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpUnit/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpCenter(stream CreateDumpCenterRequest) returns (stream CreateDumpCenterResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpCenter/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpCustomer(stream CreateDumpCustomerRequest) returns (stream CreateDumpCustomerResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpCustomer/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpAddresses(stream CreateDumpAddressesRequest) returns (stream CreateDumpAddressesResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpAddresses/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpLnMaster(stream CreateDumpLnMasterRequest) returns (stream CreateDumpLnMasterResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpLnMaster/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpSaMaster(stream CreateDumpSaMasterRequest) returns (stream CreateDumpSaMasterResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpSaMaster/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpTrnMaster(stream CreateDumpTrnMasterRequest) returns (stream CreateDumpTrnMasterResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpTrnMaster/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpSaTrnMaster(stream CreateDumpSaTrnMasterRequest) returns (stream CreateDumpSaTrnMasterResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpSaTrnMaster/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpLoanInst(stream CreateDumpLoanInstRequest) returns (stream CreateDumpLoanInstResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpLoanInst/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpLnChrgData(stream CreateDumpLnChrgDataRequest) returns (stream CreateDumpLnChrgDataResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpLnChrgData/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpCustAddInfoGroup(stream CreateDumpCustAddInfoGroupRequest) returns (stream CreateDumpCustAddInfoGroupResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpCustAddInfoGroup/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpCustAddInfoList(stream CreateDumpCustAddInfoListRequest) returns (stream CreateDumpCustAddInfoListResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpCustAddInfoList/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpCustAddInfoGroupNeed(stream CreateDumpCustAddInfoGroupNeedRequest) returns (stream CreateDumpCustAddInfoGroupNeedResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpCustAddInfoGroupNeed/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpCustAddInfo(stream CreateDumpCustAddInfoRequest) returns (stream CreateDumpCustAddInfoResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpCustAddInfo/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpMutualFund(stream CreateDumpMutualFundRequest) returns (stream CreateDumpMutualFundResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpMutualFund/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpReferencesDetails(stream CreateDumpReferencesDetailsRequest) returns (stream CreateDumpReferencesDetailsResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpReferencesDetails/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpCenterWorker(stream CreateDumpCenterWorkerRequest) returns (stream CreateDumpCenterWorkerResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpCenterWorker/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpWriteoff(stream CreateDumpWriteoffRequest) returns (stream CreateDumpWriteoffResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpWriteoff/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpAccounts(stream CreateDumpAccountsRequest) returns (stream CreateDumpAccountsResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpAccounts/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpJnlDetails(stream CreateDumpJnlDetailsRequest) returns (stream CreateDumpJnlDetailsResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpJnlDetails/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpJnlHeaders(stream CreateDumpJnlHeadersRequest) returns (stream CreateDumpJnlHeadersResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpJnlHeaders/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpLedgerDetails(stream CreateDumpLedgerDetailsRequest) returns (stream CreateDumpLedgerDetailsResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpLedgerDetails/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpUsersList(stream CreateDumpUsersListRequest) returns (stream CreateDumpUsersListResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpUsersList/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpMultiplePaymentReceipt(stream CreateDumpMultiplePaymentReceiptRequest) returns (stream CreateDumpMultiplePaymentReceiptResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpMultiplePaymentReceipt/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpInActiveCID(stream CreateDumpInActiveCIDRequest) returns (stream CreateDumpInActiveCIDResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpInActiveCID/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpLnBeneficiary(stream CreateDumpLnBeneficiaryRequest) returns (stream CreateDumpLnBeneficiaryResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpLnBeneficiary/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpReactivateWriteoff(stream CreateDumpReactivateWriteoffRequest) returns (stream CreateDumpReactivateWriteoffResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpReactivateWriteoff/create"
+      body : "*"
+    };
+  };
+
+  rpc CreateDumpColSht(stream CreateDumpColShtRequest) returns (stream CreateDumpColShtResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpColSht/create"
+      body : "*"
+    };
+  };
+
+  rpc GetDumpColSht(stream CreateDumpColShtRequest) returns (stream CreateDumpColShtResponse) {
+    option (google.api.http) = {
+      post : "/v1/DumpColSht/create"
+      body : "*"
+    };
+  };
+
+}

@@ -1,0 +1,63 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+message Decimal {
+  string value = 1;
+  bool valid = 2;
+}
+
+message NullTime {
+  google.protobuf.Timestamp value = 1;
+  bool valid = 2;
+}
+
+message NullBool {
+  bool value = 1;
+  bool valid = 2;
+}
+
+message NullFloat64 {
+  double value = 1;
+  bool valid = 2;
+}
+
+message NullInt32 {
+  int32 value = 1;
+  bool valid = 2;
+}
+
+message NullInt64 {
+  int64 value = 1;
+  bool valid = 2;
+}
+
+message NullString {
+  string value = 1;
+  bool valid = 2;
+}
+
+message CreateResponseId {
+  int64 id = 1;
+}
+
+message CreateResponseUuid {
+  int64 Uuid = 1;
+}
+
+message GetbyIdRequest {
+  string uuid = 1;
+}
+
+message GetbyUuidRequest {
+  string uuid = 1;
+}
+
+message GetbyTitleRequest {
+  string title = 1;
+}

@@ -1,0 +1,50 @@
+COPY
+(SELECT uuid_generate_v4() uuid, 
+  d.trn_head_id, d.series, d.Alternate_Key,
+  d.value_date, d.account_id, d.Trn_Type_Code, d.currency, d.item_id, d.passbook_posted, 
+  d.trn_prin, d.trn_int, d.waived_Int, d.Particular
+FROM
+  (SELECT
+    th.id trn_head_id, Row_Number() OVER(Partition by t.OrNo Order by t.TrnDate) series,
+    t.BrCode||to_char(t.trndate, 'YYYYMMDD')||'L'||t.Trn Alternate_Key, 
+    t.TrnDate value_date, acc.Id account_id, t.TrnType Trn_Type_Code, 'PHP' currency, null item_id, false passbook_posted, 
+    t.Prin trn_prin, t.Intr trn_int, t.waivedint waived_Int, t.Particular
+  FROM staging.trnMap m
+  INNER JOIN staging.trnmaster t on t.BrCode = m.BrCode and   trim(lower(COALESCE(t.username,'SA'))) = m.username and t.trndate = m.trnDate
+  INNER JOIN ticket c on c.Uuid = m.Uuid
+  INNER JOIN trn_head th on th.Trn_Serial = m.BrCode || '-' || to_char(t.OrNo, 'fm00000000000000') || '-' || c.Id 
+  LEFT JOIN Account acc on acc.alternate_acc = t.BrCode || trim(t.Acc)
+  ) d
+LEFT JOIN Account_Tran accTrn on accTrn.Alternate_Key = d.Alternate_Key
+WHERE accTrn.uuid is null
+)
+TO '/var/lib/postgresql/AccTran.csv'  WITH DELIMITER '|' CSV HEADER;
+
+select loaddata ('Account_Tran (uuid, trn_head_id, series, Alternate_Key,
+  value_date, account_id, Trn_Type_Code, currency, item_id, passbook_posted, 
+  trn_prin, trn_int, waived_Int, Particular) ','/var/lib/postgresql/AccTran.csv');
+
+
+
+COPY (
+SELECT uuid_generate_v4() uuid, 
+  d.trn_head_id, d.series, d.Alternate_Key,
+  d.value_date, d.account_id, d.Trn_Type_Code, d.currency, d.item_id, d.passbook_posted, 
+  d.trn_prin, d.trn_int, d.waived_Int, d.Particular
+FROM
+(SELECT
+  th.id trn_head_id, Row_Number() OVER(Partition by t.OrNo Order by t.TrnDate) + 100000000 series, 
+    t.BrCode||to_char(t.trndate, 'YYYYMMDD')||'S'||t.Trn Alternate_Key, 
+  t.TrnDate value_date, acc.Id account_id, t.TrnType Trn_Type_Code, 'PHP' currency, null item_id, false passbook_posted, 
+    CASE WHEN t.TrnType % 2 = 1 THEN - t.TrnAmt ELSE t.TrnAmt END trn_prin, 
+     0 trn_int, 0 waived_Int, t.Particular
+FROM staging.trnMap m
+INNER JOIN staging.satrnmaster t on t.BrCode = m.BrCode and trim(lower(COALESCE(t.username,'SA'))) = trim(lower(m.username)) and t.trndate = m.trnDate
+INNER JOIN ticket c on c.Uuid = m.Uuid
+INNER JOIN trn_head th on th.Trn_Serial = m.BrCode || '-' || to_char(COALESCE(t.OrNo,0), 'fm00000000000000') || '-' || c.Id 
+LEFT JOIN Account acc on acc.alternate_acc = t.BrCode || trim(t.Acc)
+) d
+LEFT JOIN Account_Tran accTrn on accTrn.Alternate_Key = d.Alternate_Key
+where accTrn.uuid is null
+)
+TO '/var/lib/postgresql/AccsaTran.csv'  WITH DELIMITER '|' CSV HEADER;

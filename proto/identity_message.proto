@@ -1,0 +1,176 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message AddressList {
+  string uuid = 1;
+  int64 iiid = 2;
+  int32 series = 3;
+  string detail = 4;
+  string url = 5;
+  int64 typeId = 6;
+  int64 geographyId = 7;
+  NullString otherInfo = 8;
+}
+
+message Contact {
+  string uuid = 1;
+  int64 iiid = 2;
+  int32 series = 3;
+  string contact = 4;
+  int64 typeId = 5;
+  NullString otherInfo = 6;
+}
+
+message Educational {
+  string uuid = 1;
+  int64 iiid = 2;
+  int32 series = 3;
+  int64 levelId = 4;
+  int64 courseTypeId = 5;
+  int64 courseId = 6;
+  string course = 7;
+  string school = 8;
+  string addressDetail = 9;
+  string addressUrl = 10;
+  int64 geographyId = 11;
+  google.protobuf.Timestamp startDate = 12;
+  google.protobuf.Timestamp endDate = 13;
+  string periodDate = 14;
+  bool completed = 15;
+  NullString otherInfo = 16;
+}
+
+message Employee {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 iiid = 3;
+  int64 centralId = 4;
+  string employeeNo = 5;
+  double basicPay = 6;
+  google.protobuf.Timestamp dateHired = 7;
+  google.protobuf.Timestamp dateRegular = 8;
+  int32 jobGrade = 9;
+  int32 jobStep = 10;
+  int64 levelId = 11;
+  int64 officeId = 12;
+  int64 positionId = 13;
+  int64 statusId = 14;
+  int64 superiorId = 15;
+  int64 typeId = 16;
+  NullString otherInfo = 17;
+}
+
+message Employment {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 iiid = 3;
+  int32 series = 4;
+  string company = 5;
+  string title = 6;
+  string addressDetail = 7;
+  string addressUrl = 8;
+  int64 geographyId = 9;
+  google.protobuf.Timestamp startDate = 10;
+  google.protobuf.Timestamp endDate = 11;
+  string periodDate = 12;
+  string remarks = 13;
+  NullString otherInfo = 14;
+}
+
+message IdentityInfo {
+  int64 iD = 1;
+  string uuid = 2;
+  bool isperson = 3;
+  int64 titleId = 4;
+  string nickName = 5;
+  string lastName = 6;
+  string firstName = 7;
+  string middleName = 8;
+  string motherMaidenName = 9;
+  google.protobuf.Timestamp birthday = 10;
+  bool sex = 11;
+  int64 genderId = 12;
+  int64 civilStatusId = 13;
+  int64 birthPlaceId = 14;
+  int64 contactId = 15;
+  int64 identityMapId = 16;
+  string alternateId = 17;
+  string phone = 18;
+  string email = 19;
+  NullString otherInfo = 20;
+}
+
+message Ids {
+  string uuid = 1;
+  int64 iiid = 2;
+  int32 series = 3;
+  string iD = 4;
+  google.protobuf.Timestamp registrationDate = 5;
+  google.protobuf.Timestamp validityDate = 6;
+  int64 typeId = 7;
+  NullString otherInfo = 8;
+}
+
+message IncomeSource {
+  string uuid = 1;
+  int64 iiid = 2;
+  int32 series = 3;
+  string source = 4;
+  int64 typeId = 5;
+  string minIncome = 6;
+  string maxIncome = 7;
+  string remarks = 8;
+  NullString otherInfo = 9;
+}
+
+message Office {
+  int64 iD = 1;
+  string uuid = 2;
+  string code = 3;
+  string shortName = 4;
+  string officeName = 5;
+  google.protobuf.Timestamp dateStablished = 6;
+  int64 typeId = 7;
+  int64 officerId = 8;
+  int64 parentId = 9;
+  int64 alternateId = 10;
+  string addressDetail = 11;
+  string addressUrl = 12;
+  int64 geographyId = 13;
+  int64 cidSequence = 14;
+  NullString otherInfo = 15;
+}
+
+message PersonalInfo {
+  int64 iD = 1;
+  string uuid = 2;
+  bool isadopted = 3;
+  google.protobuf.Timestamp marriageDate = 4;
+  string knownLanguage = 5;
+  int64 industryId = 6;
+  int64 nationalityId = 7;
+  int64 occupationId = 8;
+  int64 religionId = 9;
+  int64 sectorId = 10;
+  int64 sourceIncomeId = 11;
+  int64 disabilityId = 12;
+  NullString otherInfo = 13;
+}
+
+message Relation {
+  string uuid = 1;
+  int64 iiid = 2;
+  int32 series = 3;
+  int64 relationIiid = 4;
+  int64 typeId = 5;
+  google.protobuf.Timestamp relationDate = 6;
+  NullString otherInfo = 7;
+}

@@ -1,0 +1,766 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "accountinventoryitem_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "InventoryItemService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/inventoryItem/create": {
+      "post": {
+        "operationId": "InventoryItemService_CreateInventoryItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankInventoryItemResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankInventoryItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankInventoryItemRequest"
+            }
+          }
+        ],
+        "tags": [
+          "InventoryItemService"
+        ]
+      }
+    },
+    "/v1/inventoryItem/get": {
+      "get": {
+        "operationId": "InventoryItemService_GetInventoryItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankInventoryItemResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankInventoryItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "InventoryItemService"
+        ]
+      }
+    },
+    "/v1/inventoryItem/get/brand": {
+      "get": {
+        "operationId": "InventoryItemService_GetListInventoryItembyBrand",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankGetListInventoryItemResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankGetListInventoryItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "brandId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "InventoryItemService"
+        ]
+      }
+    },
+    "/v1/inventoryItem/get/generic": {
+      "get": {
+        "operationId": "InventoryItemService_GetListInventoryItembyGeneric",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankGetListInventoryItemResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankGetListInventoryItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "genericId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "InventoryItemService"
+        ]
+      }
+    },
+    "/v1/inventoryItem/get/uuid": {
+      "get": {
+        "operationId": "InventoryItemService_GetInventoryItembyUuid",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankInventoryItemResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankInventoryItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "InventoryItemService"
+        ]
+      }
+    },
+    "/v1/inventoryItem/search": {
+      "get": {
+        "operationId": "InventoryItemService_SearchInventoryItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankGetListInventoryItemResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankGetListInventoryItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "InventoryItemService"
+        ]
+      }
+    },
+    "/v1/inventoryItem/update": {
+      "post": {
+        "operationId": "InventoryItemService_UpdateInventoryItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankInventoryItemResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankInventoryItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankInventoryItemRequest"
+            }
+          }
+        ],
+        "tags": [
+          "InventoryItemService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "SearchInventoryItemRequestItemIdDate": {
+      "type": "object",
+      "properties": {
+        "inventoryItemId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "value": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "value2": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "SearchInventoryItemRequestItemIdNumber": {
+      "type": "object",
+      "properties": {
+        "inventoryItemId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "value": {
+          "type": "string"
+        },
+        "value2": {
+          "type": "string"
+        }
+      }
+    },
+    "SearchInventoryItemRequestItemIdString": {
+      "type": "object",
+      "properties": {
+        "inventoryItemId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "simplebankDocument": {
+      "type": "object",
+      "properties": {
+        "iD": {
+          "type": "string",
+          "format": "int64"
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "serverId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "filePath": {
+          "type": "string"
+        },
+        "docDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "thumbnail": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "byte"
+          }
+        },
+        "doctypeId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "description": {
+          "type": "string"
+        },
+        "otherInfo": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankGetListInventoryItemResponse": {
+      "type": "object",
+      "properties": {
+        "inventoryItemResponse": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventoryItemResponse"
+          }
+        }
+      }
+    },
+    "simplebankInventoryItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "barCode": {
+          "type": "string"
+        },
+        "itemName": {
+          "type": "string"
+        },
+        "uniqueVariation": {
+          "type": "string"
+        },
+        "parentId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "genericNameId": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "brandNameId": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "measureId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "imageId": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "remarks": {
+          "type": "string"
+        },
+        "otherInfo": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankInventoryItemChildRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "barCode": {
+          "type": "string"
+        },
+        "itemName": {
+          "type": "string"
+        },
+        "uniqueVariation": {
+          "type": "string"
+        },
+        "parentId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "genericNameId": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "brandNameId": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "measureId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "imageId": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "remarks": {
+          "type": "string"
+        },
+        "otherInfo": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "inventorySpecsString": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventorySpecsString"
+          }
+        },
+        "inventorySpecsNumber": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventorySpecsNumber"
+          }
+        },
+        "inventorySpecsDate": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventorySpecsDate"
+          }
+        },
+        "child": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventoryItemChildRequest"
+          }
+        }
+      }
+    },
+    "simplebankInventoryItemRequest": {
+      "type": "object",
+      "properties": {
+        "inventoryItem": {
+          "$ref": "#/definitions/simplebankInventoryItem"
+        },
+        "child": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventoryItemChildRequest"
+          }
+        },
+        "inventorySpecsString": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventorySpecsString"
+          }
+        },
+        "inventorySpecsNumber": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventorySpecsNumber"
+          }
+        },
+        "inventorySpecsDate": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventorySpecsDate"
+          }
+        }
+      }
+    },
+    "simplebankInventoryItemResponse": {
+      "type": "object",
+      "properties": {
+        "inventoryItem": {
+          "$ref": "#/definitions/simplebankInventoryItem"
+        },
+        "genericName": {
+          "$ref": "#/definitions/simplebankReference"
+        },
+        "brandName": {
+          "$ref": "#/definitions/simplebankReference"
+        },
+        "measure": {
+          "$ref": "#/definitions/simplebankReference"
+        },
+        "image": {
+          "$ref": "#/definitions/simplebankDocument"
+        },
+        "inventorySpecsString": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventorySpecsString"
+          }
+        },
+        "inventorySpecsNumber": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventorySpecsNumber"
+          }
+        },
+        "inventorySpecsDate": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventorySpecsDate"
+          }
+        },
+        "child": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/simplebankInventoryItemResponse"
+          }
+        }
+      }
+    },
+    "simplebankInventorySpecsDate": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string"
+        },
+        "inventoryItemId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "specsId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "value": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "value2": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "simplebankInventorySpecsNumber": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string"
+        },
+        "inventoryItemId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "specsId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "value": {
+          "type": "string"
+        },
+        "value2": {
+          "type": "string"
+        },
+        "measureId": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankInventorySpecsString": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string"
+        },
+        "inventoryItemId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "specsId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankNullInt64": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "format": "int64"
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "simplebankNullString": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "simplebankReference": {
+      "type": "object",
+      "properties": {
+        "iD": {
+          "type": "string",
+          "format": "int64"
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string",
+          "format": "int64"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "statuscode": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "parentId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "typeId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "otherInfo": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    }
+  }
+}

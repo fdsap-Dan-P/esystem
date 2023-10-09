@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Other_Schedule cascade;

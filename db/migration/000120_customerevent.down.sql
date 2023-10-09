@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Customer_Event cascade;

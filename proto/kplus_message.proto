@@ -1,0 +1,410 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+// import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+// import "type_message.proto";
+
+message KPLUSAddressInfo {
+  int64 iiid = 1;
+  int64 series = 2;
+  int64 addressTypeID = 3;
+  string addressType = 4;
+  string details = 5;
+  string barangay = 6;
+  string municipality = 7;
+  string province = 8;
+  string country = 9;
+}
+
+message KPLUSContact {
+  int64 iiid = 1;
+  int64 series = 2;
+  int64 contactTypeID = 3;
+  string contactType = 4;
+  string contact = 5;
+}
+
+message KPLUSCustomerRequest {
+  int64 cid = 1;
+}
+
+message KPLUSCustomerResponse {
+  int64 cid = 1;
+  string lastName = 2;
+  string firstName = 3;
+  string middleName = 4;
+  string maidenFName = 5;
+  string maidenLName = 6;
+  string maidenMName = 7;
+  string doBirth = 8;
+  string birthPlace = 9;
+  string sex = 10;
+  string civilStatus = 11;
+  string title = 12;
+  int64 status = 13;
+  string statusDesc = 14;
+  int64 classification = 15;
+  string classificationDesc = 16;
+  int64 subClassification = 17;
+  string subClassificationDesc = 18;
+  string business = 19;
+  string doEntry = 20;
+  string doRecognized = 21;
+  string doResigned = 22;
+  string brCode = 23;
+  string branchName = 24;
+  string unitCode = 25;
+  string unitName = 26;
+  string centerCode = 27;
+  string centerName = 28;
+  bool dosri = 29;
+  string reffered = 30;
+  string remarks = 31;
+  string accountNumber = 32;
+  string searchName = 33;
+  repeated KPLUSAddressInfo address = 34;
+  repeated KPLUSContact contact = 35;
+  string memberMaidenFName = 36;
+  string memberMaidenLName = 37;
+  string memberMaidenMName = 38;
+}
+
+message KPLUSCustSavingsList { 
+  int64 cid = 1;
+  string acc = 2;
+  int64 acctType = 3;
+  string accDesc = 4;
+  string dopen = 5;
+  string statusDesc = 6;
+  double balance = 7;
+  int64 status = 8;
+} 
+
+message KPLUSCustSavingsListResponse { 
+  repeated KPLUSCustSavingsList custSavingsList  = 1;
+} 
+
+message KPLUSGetTransactionHistoryRequest { 
+  string acc = 1;
+  string date_from = 2;
+  string date_to = 3;
+} 
+
+message  KPLUSTransaction { 
+  int64 accountId = 1;
+  string acc = 2;
+  string trndate = 3;
+  int64 trnHeadId = 4;
+  int64 trn = 5;
+  string alternateKey = 6;
+  double prin = 7;
+  double intr = 8;
+  double trnAmount = 9;
+  double balPrin = 10;
+  double balInt = 11;
+  double balance = 12;
+  string particulars = 13;
+  string trnType = 14;
+  string username = 15;
+  bool isFinancial = 16;
+
+}
+
+message KPLUSGetTransactionHistoryResponse { 
+  repeated  KPLUSTransaction transaction  = 1;
+} 
+
+message KPLUSColShtperCID { 
+  string iNAIIID = 1;
+  string brCode = 2;
+  int64 appType = 3;
+  int64 code = 4;
+  int64 status = 5;
+  string statusDesc = 6;
+  string acc = 7;
+  int64 iiid = 8;
+  int64 customerId = 9;
+  int64 centralOfficeId = 10;
+  int64 cID = 11;
+  string uM = 12;
+  string clientName = 13;
+  int64 centerCode = 14;
+  string centerName = 15;
+  int64 manCode = 16;
+  string unit = 17;
+  int64 areaCode = 18;
+  string area = 19;
+  string staffName = 20;
+  int64 acctType = 21;
+  string acctDesc = 22;
+  string disbDate = 23;
+  string dateStart = 24;
+  string maturity = 25;
+  double principal = 26;
+  double interest = 27;
+  int64 gives = 28;
+  double ibalPrin = 29;
+  double ibalInt = 30;
+  double balPrin = 31;
+  double balInt = 32;
+  double amort = 33;
+  double duePrin = 34;
+  double dueInt = 35;
+  double loanBal = 36;
+  double saveBal = 37;
+  double waivedInt = 38;
+  int64 unPaidCtr = 39;
+  int64 writenOff = 40;
+  int64 classification = 41;
+  int64 classDesc = 42;
+  int64 writeOff = 43;
+  double pay = 44;
+  double withdraw = 45;
+  int64 type = 46;
+  string orgName = 47;
+  string orgAddress = 48;
+  string meetingDate = 49;
+  int64 meetingDay = 50;
+  double sharesOfStock = 51;
+  string dateEstablished = 52;
+  string uuid = 53;
+}
+
+message KPLUSGenerateColShtperCIDResponse { 
+  repeated  KPLUSColShtperCID KPLUSColShtperCID  = 1;
+} 
+
+message KPLUSCallBackRefRequest { 
+  string prNumber = 1;
+} 
+
+message KPLUSResponse { 
+  int64 retCode = 1;
+  string message = 2;
+  string reference = 3;
+} 
+
+// message KPLUSPayment { 
+//   int64 appType = 1;
+//   int64 code = 2;
+//   int64 status = 3;
+//   string statusDesc = 4;
+//   string acc = 5;
+//   int64 iiid = 6;
+//   string um = 7;
+//   string clientName = 8;
+//   int64 centerCode = 9;
+//   string centerName = 10;
+//   int64 manCode = 11;
+//   string unit = 12;
+//   int64 areaCode = 13;
+//   string area = 14;
+//   string staffName = 15;
+//   int64 accttype = 16;
+//   string acctDesc = 17;
+//   string disbdate = 18;
+//   string dateStart = 19;
+//   string maturity = 20;
+//   double principal = 21;
+//   double interest = 22;
+//   int64 gives = 23;
+//   double ibalPrin = 24;
+//   double ibalInt = 25;
+//   double balPrin = 26;
+//   double balInt = 27;
+//   double amort = 28;
+//   double duePrin = 29;
+//   double dueInt = 30;
+//   double loanBal = 31;
+//   double saveBal = 32;
+//   double waiveInt = 33;
+//   int64 unpaidCtr = 34;
+//   int64 writtenoff = 35;
+//   int64 classification = 36;
+//   string classDesc = 37;
+//   int64 writeoff = 38;
+//   double pay = 39;
+//   double withdraw = 40;
+//   int64 type = 41;
+//   string uuid = 42;
+// } 
+
+message KPLUSPayment { 
+  string acc = 1;
+  double pay = 2;
+  double withdraw = 3;
+  int64 appType = 4;
+} 
+
+message KPLUSMultiplePaymentRequest { 
+  string remitterCID = 1;
+  string prNumber = 2;
+  int64 sourceId = 3;
+  int64 orNumber = 4;
+  string username = 5;
+  string trndate = 6;
+  double totalCollection = 7;
+  string particulars = 8;
+  repeated KPLUSPayment payment = 9;
+} 
+
+message KPLUSGetReferencesRequest { 
+  string reference = 1;
+} 
+
+message KPLUSReferences { 
+  int64 status = 1;
+  string refType = 2;
+  int64 code = 3;
+  string shortName = 4;
+  int64 ownerRID = 5;
+  int64 statusID = 6;
+  string title = 7;
+  int64 refTypeID = 8;
+  int64 refTypeRID = 9;
+  string refTypeTitle = 10;
+  int64 refID = 11;
+  int64 refRID = 12;
+  int64 parentID = 13;
+  int64 refTypeParentID = 14;
+  string refTypeParent = 15;
+  string refTypeTitleParent = 16;
+  string xml = 17;
+  string parent = 18;
+} 
+
+message KPLUSGetReferencesResponse { 
+  repeated KPLUSReferences references = 1;
+} 
+
+message KPLUSLoan  { 
+  string acc = 1;
+  int64 status = 2;
+  string dateRelease = 3;
+  int64 acctType = 4;
+  double principal = 5;
+  double interest = 6;
+  double oth = 7;
+  double balance = 8;
+  int64 term = 9;
+  int64 paidTerm = 10;
+} 
+
+message KPLUSSearchLoanListResponse { 
+  repeated KPLUSLoan loan = 1;
+} 
+
+message KPLUSAccRequest { 
+ string num = 1;
+} 
+
+message KPLUSAmort { 
+  int64 dnum = 1;
+  string acc = 2;
+  string dueDate = 3;
+  int64 instFlag = 4;
+  double prin = 5;
+  double intr = 6;
+  double oth = 7;
+  double penalty = 8;
+  double endBal = 9;
+  double endInt = 10;
+  double endOth = 11;
+  double instPd = 12;
+  double penPd = 13;
+  double carVal = 14;
+  double upInt = 15;
+  double servFee = 16;
+  double pledgeAmort = 17;
+} 
+message KPLUSCharge { 
+  int64 chargeTypeId = 1;
+  string chargeType = 2;
+  string refAcc = 3;
+  double amount = 4;
+ } 
+ 
+ message KPLUSCharges { 
+  string acc = 1;
+  repeated KPLUSCharge charges = 2;
+} 
+
+message KPLUSLoanInfo  { 
+  int64 cid = 1;
+  string acc = 2;
+  int64 appType = 3;
+  int64 acctType = 4;
+  string accdesc = 5;
+  string dopen = 6;
+  string domaturity = 7;
+  int64 term = 8;
+  int64 weekspaid = 9;
+  int64 status = 10;
+  double principal = 11;
+  double interest = 12;
+  double others = 13;
+  double discounted = 14;
+  double netproceed = 15;
+  double balance = 16;
+  double prin = 17;
+  double intr = 18;
+  double oth = 19;
+  double penalty = 20;
+  double waivedint = 21;
+  string disbby = 22;
+  string approvby = 23;
+  int64 cycle = 24;
+  int64 frequency = 25;
+  int64 annumdiv = 26;
+  int64 lngrpcode = 27;
+  int64 proff = 28;
+  int64 fundsource = 29;
+  double conintrate = 30;
+  int64 amortcond = 31;
+  double amortcondvalue = 32;
+  int64 classification_code = 33;
+  int64 classification_type = 34;
+  string remarks = 35;
+  double amort = 36;
+  int64 isLumpsum = 37;
+  string loanID = 38;
+  repeated KPLUSAmort amortList = 39;
+  KPLUSCharges charges = 40;
+} 
+
+message KPLUSLoanInfoResponse { 
+  repeated KPLUSLoanInfo loanInfo = 1;
+} 
+
+message KPLUSSavingInfo { 
+  int64 cid = 1;
+  string fullName = 2;
+  string acc = 3;
+  double balance = 4;
+  double withdrawable = 5;
+  int64 centerCode = 6;
+  int64 unitCode = 7;
+  string centerName = 8;
+  string unitName = 9;
+  double withdrawalAmount = 10;
+} 
+
+message KPLUSGetSavingResponse { 
+  repeated KPLUSSavingInfo SavingInfo = 1;
+} 
+
+message KPLUSFundTransferRequest { 
+  string sourceAccount = 1;
+  string targetAccount = 2;
+  double amount = 3;
+  string username = 4;
+  string trnReference = 5;
+  string particulars = 6;
+  double transFee = 7;
+  string transFeeParticulars = 8;
+}

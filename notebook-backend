@@ -1,0 +1,379 @@
+-- Golang migrate
+ brew install golang-migrate
+ mkdir -p db/migration
+ migrate create -ext sql -dir db/migration -seq init_schema
+
+ migrate create -ext sql -dir db/migration -seq add_users
+ 
+migrate create -ext sql -dir db/migration -seq mainrecord
+migrate create -ext sql -dir db/migration -seq referencetype
+migrate create -ext sql -dir db/migration -seq reference
+migrate create -ext sql -dir db/migration -seq geography
+migrate create -ext sql -dir db/migration -seq fxrate
+migrate create -ext sql -dir db/migration -seq unitconversion
+migrate create -ext sql -dir db/migration -seq coaparent
+migrate create -ext sql -dir db/migration -seq chartofaccount
+migrate create -ext sql -dir db/migration -seq identityinfo
+migrate create -ext sql -dir db/migration -seq product
+migrate create -ext sql -dir db/migration -seq accounttype
+migrate create -ext sql -dir db/migration -seq officeaccounttype
+migrate create -ext sql -dir db/migration -seq accountclass
+migrate create -ext sql -dir db/migration -seq chargetype
+migrate create -ext sql -dir db/migration -seq accessrole
+migrate create -ext sql -dir db/migration -seq accessproduct
+migrate create -ext sql -dir db/migration -seq accessaccounttype
+migrate create -ext sql -dir db/migration -seq accessobject
+migrate create -ext sql -dir db/migration -seq accessconfig
+migrate create -ext sql -dir db/migration -seq parameter
+migrate create -ext sql -dir db/migration -seq addresslist
+migrate create -ext sql -dir db/migration -seq personalinfo
+migrate create -ext sql -dir db/migration -seq ids
+migrate create -ext sql -dir db/migration -seq educational
+migrate create -ext sql -dir db/migration -seq employment
+migrate create -ext sql -dir db/migration -seq office
+migrate create -ext sql -dir db/migration -seq employee
+migrate create -ext sql -dir db/migration -seq incomesource
+migrate create -ext sql -dir db/migration -seq contact
+migrate create -ext sql -dir db/migration -seq relation
+migrate create -ext sql -dir db/migration -seq systemconfig
+migrate create -ext sql -dir db/migration -seq customergroup
+migrate create -ext sql -dir db/migration -seq customer
+migrate create -ext sql -dir db/migration -seq customerbeneficiary
+migrate create -ext sql -dir db/migration -seq userlist
+migrate create -ext sql -dir db/migration -seq userconfig
+migrate create -ext sql -dir db/migration -seq userproduct
+migrate create -ext sql -dir db/migration -seq useraccounttype
+migrate create -ext sql -dir db/migration -seq userobject
+migrate create -ext sql -dir db/migration -seq useroffice
+migrate create -ext sql -dir db/migration -seq socialmediacredential
+migrate create -ext sql -dir db/migration -seq account
+migrate create -ext sql -dir db/migration -seq accountinterest
+migrate create -ext sql -dir db/migration -seq accountterm
+migrate create -ext sql -dir db/migration -seq accountquantity
+migrate create -ext sql -dir db/migration -seq schedule
+migrate create -ext sql -dir db/migration -seq otherschedule
+migrate create -ext sql -dir db/migration -seq accountbeneficiary
+migrate create -ext sql -dir db/migration -seq officeaccount
+migrate create -ext sql -dir db/migration -seq glaccount
+migrate create -ext sql -dir db/migration -seq ticket
+migrate create -ext sql -dir db/migration -seq trnhead
+migrate create -ext sql -dir db/migration -seq trnaction
+migrate create -ext sql -dir db/migration -seq trnheadrelation
+migrate create -ext sql -dir db/migration -seq customerevent
+migrate create -ext sql -dir db/migration -seq accounttran
+migrate create -ext sql -dir db/migration -seq accountquantitytran
+migrate create -ext sql -dir db/migration -seq officeaccounttran
+migrate create -ext sql -dir db/migration -seq journaldetail
+migrate create -ext sql -dir db/migration -seq employeeevent
+migrate create -ext sql -dir db/migration -seq actionticket
+migrate create -ext sql -dir db/migration -seq comment
+//migrate create -ext sql -dir db/migration -seq datasourcemap
+migrate create -ext sql -dir db/migration -seq storage
+migrate create -ext sql -dir db/migration -seq document
+
+
+
+-- Docker install Postgres
+docker pull postgres:12-alpine
+docker run --name postgres12 -p 5434:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
+docker ps
+docker exec -it postgres12 psql -U root
+docker logs postgres12
+docker run --name simplebank --network bank-network -p 8080:8080 -e GIN_MODE=release \
+  -e DB_SOURCE="postgresql://root:secret@postgres12:5432/simple_bank?sslmode=disable" \
+  simplebank:latest
+docker container inspect postgres12 | grep IPAddress
+docker container inspect simplebank | grep IPAddress
+docker rm simplebank
+docker rmi 
+
+-- Docker create network
+docker network create bank-network
+docker network connect bank-network postgres12
+docker network inspect bank-network | grep IPAddress
+
+-- Create DB in Postgres
+createdb --username=root --owner=root simple_bank
+dropdb simple_bank
+exist
+
+
+-- sqlc.dev
+go get github.com/kyleconroy/sqlc/cmd/sqlc
+
+-- Postgress Grt Lock
+SELECT a.application_name, a.datname,
+         l.relation::regclass,
+         l.transactionid,
+         l.mode,
+         l.GRANTED,
+         a.usename,
+         a.query,
+         a.query_start,
+         age(now(), a.query_start) AS "age",
+         a.pid
+FROM pg_stat_activity a
+JOIN pg_locks l ON l.pid = a.pid
+ORDER BY a.pid;
+
+-- Manually generating your SSH key in macOS 
+ssh-keygen -t rsa
+
+
+sudo docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=evcjam1cdej" \
+   -p 1433:1433 --name esystem --hostname . \
+   -d \
+   mcr.microsoft.com/mssql/server:2022-latest
+
+
+docker exec -t 194cd70a0cc1 cat /var/opt/mssql/log/errorlog | grep connection
+
+sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \
+-S localhost -U SA \
+ -P "$(read -sp "Enter current SA password: "; echo "${REPLY}")" \
+ -Q "ALTER LOGIN SA WITH PASSWORD=\"$(read -sp "Enter new SA password: "; echo "${REPLY}")\""
+
+ sqlcmd -S localhost,1433 -U SA -P "evcjam1cdej"
+
+sqlcmd -S 127.0.0.1 -U sa -P evcjam1cdej > select 'dd' > go
+
+docker run -it mcr.microsoft.com/mssql-tools
+
+docker exec -it 263d578de57f /var/lib/postgresql
+
+docker exec -it 57792c1eb13f /var/lib/postgresql
+
+docker exec -it 57792c1eb13f /var/lib/postgresql
+
+docker exec -it 57792c1eb13f /usr/local
+
+docker 57792c1eb13f ls /usr/local
+
+docker run  57792c1eb13f /usr/local
+
+docker exec 57792c1eb13f ls -la /usr/local
+docker exec 57792c1eb13f ls -la /var/lib/postgresql
+
+docker exec 57792c1eb13f ls -la /var/lib/postgresql/E3-Center.csv
+docker cp /Users/rhickmercado/Documents/Programming/go/src/simplebank/db/datastore/esystemlocal/csv/LnMaster.csv 263d578de57f:/usr/local/LnMaster.go
+
+docker cp /Users/rhickmercado/Documents/Programming/go/src/simplebank/db/datastore/esystemlocal/csv/UsersList.csv 263d578de57f:/var/lib/postgresql/UsersList.csv
+
+docker cp /eSystem/simplebank/cmd/server/-UsersList.csv 57792c1eb13f:/var/lib/postgresql/UsersList.csv
+
+docker cp E3-InActiveCID.csv 57792c1eb13f:/var/lib/postgresql/.
+
+docker cp /Users/rhickmercado/Documents/Programming/go/src/simplebank/cmd/server/E3-Center.csv 263d578de57f:/var/lib/postgresql/E3-Center.csv
+
+docker exec 263d578de57f chmod 777 /var/lib/postgresql/E3-Area.csv
+
+docker cp  /Users/rhickmercado/Documents/Programming/go/src/simplebank/cmd/server/E3-Area.csv 263d578de57f:/var/lib/postgresql/E3-Area.csv ; docker exec 263d578de57f chmod 777 /var/lib/postgresql/E3-Area.csv 
+
+
+ docker cp /Users/rhickmercado/Documents/Programming/go/src/simplebank/E3-Area.csv /Users/rhickmercado/Documents/Programming/go/src/simplebank:/Users/rhickmercado/Documents/Programming/go/src/simplebankE3-Area.csv ; docker exec /Users/rhickmercado/Documents/Programming/go/src/simplebank chmod 777 /Users/rhickmercado/Documents/Programming/go/src/simplebankE3-Area.csv 
+
+export PATH=$PATH:/usr/local/go/bin
+
+kill -9 $(pidof esystem)
+
+
+sudo yum install lsof
+
+kill -9 $(lsof -t -i:8080)
+
+-- order by size
+du -sh -- * | sort -h
+
+
+git rm -r --cached /Users/rhickmercado/Documents/Programming/go/src/simplebank/cmd/server/*.csv
+git rm -r --cached /Users/rhickmercado/Documents/Programming/go/src/simplebank/cmd/client/esystem/csv
+
+
+-- Generate a self-signed certificate and key pair:
+openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -days 365
+
+
+-- install to postgress server
+ssh -p 2222 rhickmercado@34.142.152.56
+scp -P 2222 cesystem rhickmercado@34.142.152.56:/home/rhickmercado
+
+
+curl -X POST localhost:8080/v1/echo
+curl -X POST http://localhost:8080/v1/echo
+
+ssh -p 2222 rhickmercado@34.142.152.56
+ssh rhickmercado@34.143.228.170
+
+user: rhickmercado
+pass: Fd5@p.@dmn1n2023
+cd cmd/server
+./cesystem
+
+
+-- RSA to auto login
+ssh-keygen -t rsa -b 2048
+ssh-copy-id rhickmercado@34.143.228.170
+.ssh/authorized_keys
+
+
+MSSQL userd=rmercado;password=l0c@leSt3m
+
+scp cesystem rhickmercado@34.143.228.170:/home/rhickmercado
+
+scp -P 2222 app.env rhickmercado@34.142.152.56:/home/rhickmercado
+
+curl -X POST http://localhost:8090/v1/echo -d '{ "name": "FDSAP" }'
+
+curl -X POST http://34.143.228.170:8090/v1/echo -d '{ "name": "FDSAP" }'
+
+
+
+curl -X POST http://34.143.228.170:8090/v1/echo -d '{ "name": "FDSAP" }'
+
+
+curl -X POST http://34.143.228.170:5432
+
+telnet 34.143.228.170 8090
+
+ip -br -c addr show
+
+sudo iptables -A INPUT -p tcp --dport 8090 -j ACCEPT
+
+nc -zv 34.143.228.170 8090
+
+
+
+install SSL in Linux
+
+sudo yum install git
+sudo git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
+
+-- ces.fdsasya.com
+
+/opt/letsencrypt
+sudo -H ./letsencrypt-auto certonly --standalone -d ces.fdsasya.com
+
+
+sudo yum install certbot python2-certbot-apache
+
+
+-- location of certificate
+sudo ls /etc/letsencrypt/live/ces.fdsasya.com/
+
+
+sudo vi /etc/httpd/conf.d/ces.fdsasya.com.conf
+-- add
+<VirtualHost *:80>
+    ServerName ces.fdsasya.com
+    DocumentRoot /var/www/html
+    # Any other necessary configuration directives
+</VirtualHost>
+
+-- then
+sudo apachectl configtest
+>>> Output: Syntax OK
+
+sudo systemctl restart httpd
+
+sudo nano /etc/httpd/conf.d/yourdomain.com.conf
+
+
+sudo certbot --apache -d ces.fdsasya.com
+sudo apachectl configtest
+sudo systemctl restart httpd
+sudo certbot renew --dry-run
+
+
+
+-- install nginx
+sudo yum update
+sudo yum install nginx
+sudo systemctl start nginx
+
+-- edit config
+sudo vi /etc/nginx/nginx.conf
+
+gzip on;
+gzip_types text/plain text/css application/javascript application/json;
+gzip_min_length 1000;
+gzip_proxied any;
+gzip_comp_level 5;
+gzip_vary on;
+gzip_disable "msie6";
+
+-- save 
+-- check 
+sudo nginx -t
+-- restart
+sudo systemctl restart nginx
+
+
+--- Check the detailed error logs by running the following command:
+journalctl -xe
+
+
+
+docker cp /home/rhickmercado/cmd/server/E3-LnBeneficiary.csv 57792c1eb13f:/var/lib/postgresql/E3-LnBeneficiary.csv ; 
+
+docker exec 57792c1eb13f chmod 777 /var/lib/postgresql/E3-LnBeneficiary.csv 
+2023/05/27 20:41:53 rpc error: code = Unknown desc = cannot copy to Postgres Server: exit status 1
+2023/05/27 20:41:53 UploadFile: -->
+
+
+data
+
+cmdStr := "docker cp /home/rhickmercado/cmd/server/E3-LnBeneficiary.csv 57792c1eb13f:/var/lib/postgresql/E3-LnBeneficiary.csv ; docker exec 57792c1eb13f chmod 777 /var/lib/postgresql/E3-LnBeneficiary.csv"
+
+cmd := exec.Command("/bin/sh", "-c", cmdStr)
+
+	if err != nil {
+		// The command failed to start.
+		fmt.Println(err)
+		util.LogError(err)
+	}
+
+	// Wait for the command to finish.
+	err = cmd.Wait()
+	if err != nil {
+		// The command failed.
+		fmt.Println(err)
+		util.LogError(err)
+	}
+
+-keyalg
+keytool -genkey -v -keystore app_signing_certificate.jks -alias androiddebugkey -storepass android -keypass android -dname "CN=Android Debug, O=Android, C=US" -keyalg rsa
+
+keytool -list -v -keystore app_signing_cert.jks
+k5y4my@ppS0ft
+keytool -genkey -v -keystore app_signing_cert.jks -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+
+
+# Use a python you have installed in a special location
+export CLOUDSDK_PYTHON=/Library/Frameworks/Python.framework/Versions/3.9/bin/python3
+
+/Users/rhickmercado/Documents/google-cloud-sdk/install.sh
+
+/Users/rhickmercado/Documents/google-cloud-sdk/bin/gcloud init
+
+
+gcloud builds submit --tag gcr.io/EquitySupply/EquitySupply:1.0 .
+
+gcloud builds submit --tag gcr.io/EquitySupply/EquitySupply:1.0 ./..
+
+firebase logout
+--config cloudbuild.yaml 
+
+
+web       1:933131093337:web:94c204c57d0b515db07848
+android   1:933131093337:android:bd2fe911011b7efeb07848
+ios       1:933131093337:ios:7caa4c418c9244a2b07848
+macos     1:933131093337:ios:0a9580f2a43b054cb07848
+
+
+export FIREBASE_TOKEN=1//0g9KX3IqK96QFCgYIARAAGBASNwF-L9IrxCfpgRH3qd8nELQS3B5R2c1vizeWwJiOgWAaD9jfxUoiwZOCdAPeEG8hRJTSX3OjpIk
+
+firebase --token TOKEN "1//0eBOU8Uj6KEI0CgYIARAAGA4SNwF-L9IrM95SK9N8wYWqkSSJ5VqzIcBV8DSELIuZUK0htseAOiXDWR_debcf18gudCQInYsyW2I"
+
+git remote add origin https://github.com/RhickMercado/equitysupply.git
+
+git remote add origin https://github.com/RhickMercado/equitysupply.git

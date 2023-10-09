@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Actor_Group_Action cascade;

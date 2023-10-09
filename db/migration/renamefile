@@ -1,0 +1,62 @@
+touch 000085_tickettype.down.sql
+touch 000085_tickettype.up.sql
+touch 000086_actionlist.down.sql
+touch 000086_actionlist.up.sql
+touch 000087_ticketflow.down.sql
+touch 000087_ticketflow.up.sql
+touch 000088_actorlist.down.sql
+touch 000088_actorlist.up.sql
+touch 000089_actoraction.down.sql
+touch 000089_actoraction.up.sql
+touch 000090_event.down.sql
+touch 000090_event.up.sql
+touch 000091_eventaction.down.sql
+touch 000091_eventaction.up.sql
+mv 000092_customerevent.down.sql 000092_customerevent.down.sql
+mv 000092_customerevent.up.sql 000092_customerevent.up.sql
+touch 000093_accountevent.down.sql
+touch 000093_accountevent.up.sql
+mv 000097_employeeevent.down.sql 000094_employeeevent.down.sql
+mv 000097_employeeevent.up.sql 000094_employeeevent.up.sql
+mv 000099_subjectevent.down.sql 000095_subjectevent.down.sql
+mv 000099_subjectevent.up.sql 000095_subjectevent.up.sql
+touch 000096_task.down.sql
+touch 000096_task.up.sql
+mv 000090_trnaction.down.sql 000097_taskaction.down.sql
+mv 000090_trnaction.up.sql 000097_taskaction.up.sql
+mv 000086_trnhead.down.sql 000098_trnhead.down.sql
+mv 000086_trnhead.up.sql 000098_trnhead.up.sql
+mv 000098_actionticket.down.sql 000099_trnheadaction.down.sql
+mv 000098_actionticket.up.sql 000099_trnheadaction.up.sql
+mv 000086_trnheadspecsdate.down.sql 000100_trnheadspecsdate.down.sql
+mv 000086_trnheadspecsdate.up.sql 000100_trnheadspecsdate.up.sql
+mv 000087_trnheadspecsnumber.down.sql 000101_trnheadspecsnumber.down.sql
+mv 000087_trnheadspecsnumber.up.sql 000101_trnheadspecsnumber.up.sql
+mv 000088_trnheadspecsstring.down.sql 000102_trnheadspecsstring.down.sql
+mv 000088_trnheadspecsstring.up.sql 000102_trnheadspecsstring.up.sql
+mv 000089_trnheadspecsref.down.sql 000103_trnheadspecsref.down.sql
+mv 000089_trnheadspecsref.up.sql 000103_trnheadspecsref.up.sql
+mv 000091_trnheadrelation.down.sql 000104_trnheadrelation.down.sql
+mv 000091_trnheadrelation.up.sql 000104_trnheadrelation.up.sql
+mv 000093_accounttran.down.sql 000105_accounttran.down.sql
+mv 000093_accounttran.up.sql 000105_accounttran.up.sql
+mv 000094_inventorytran.down.sql 000106_inventorytran.down.sql
+mv 000094_inventorytran.up.sql 000106_inventorytran.up.sql
+mv 000095_officeaccounttran.down.sql 000107_officeaccounttran.down.sql
+mv 000095_officeaccounttran.up.sql 000107_officeaccounttran.up.sql
+mv 000096_journaldetail.down.sql 000108_journaldetail.down.sql
+mv 000096_journaldetail.up.sql 000108_journaldetail.up.sql
+mv 000100_questionnaire.down.sql 000109_questionnaire.down.sql
+mv 000100_questionnaire.up.sql 000109_questionnaire.up.sql
+mv 000101_question.down.sql 000110_question.down.sql
+mv 000101_question.up.sql 000110_question.up.sql
+mv 000102_answer.down.sql 000111_answer.down.sql
+mv 000102_answer.up.sql 000111_answer.up.sql
+mv 000103_comment.down.sql 000112_comment.down.sql
+mv 000103_comment.up.sql 000112_comment.up.sql
+mv 000104_post.down.sql 000113_post.down.sql
+mv 000104_post.up.sql 000113_post.up.sql
+mv 000105_likes.down.sql 000114_likes.down.sql
+mv 000105_likes.up.sql 000114_likes.up.sql
+mv 000106_follower.down.sql 000115_follower.down.sql
+mv 000106_follower.up.sql 000115_follower.up.sql

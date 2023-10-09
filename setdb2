@@ -1,0 +1,10 @@
+export DB2HOME=/Users/rhickmercado/go/pkg/mod/github.com/ibmdb/clidriver
+export CGO_CFLAGS=/Users/rhickmercado/go/pkg/mod/github.com/ibmdb/clidriver/include
+export CGO_LDFLAGS=/Users/rhickmercado/go/pkg/mod/github.com/ibmdb/clidriver/lib
+export DYLD_LIBRARY_PATH=/Users/rhickmercado/go/pkg/mod/github.com/ibmdb/clidriver/lib
+
+
+export DB2HOME=/Users/rhickmercado/Documents/Programming/go/src/github.com/ibmdb/clidriver
+export CGO_CFLAGS=-I/Users/rhickmercado/Documents/Programming/go/src/github.com/ibmdb/clidriver/include
+export CGO_LDFLAGS=-L/Users/rhickmercado/Documents/Programming/go/src/github.com/ibmdb/clidriver/lib
+export DYLD_LIBRARY_PATH=/Users/rhickmercado/Documents/Programming/go/src/github.com/ibmdb/clidriver/lib

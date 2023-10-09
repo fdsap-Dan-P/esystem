@@ -1,0 +1,54 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message Comment {
+  string uuid = 1;
+  string recordUuid = 2;
+  int64 userId = 3;
+  string comment = 4;
+  NullString otherInfo = 5;
+}
+
+message Follower {
+  int64 userId = 1;
+  int64 followerId = 2;
+  google.protobuf.Timestamp dateFollowed = 3;
+  bool isFollower = 4;
+}
+
+message Likes {
+  string uuid = 1;
+  int64 userId = 2;
+  int32 mood = 3;
+  google.protobuf.Timestamp dateLiked = 4;
+}
+
+message Post {
+  string uuid = 1;
+  int64 userId = 2;
+  string caption = 3;
+  string messageBody = 4;
+  string url = 5;
+  string imageUri = 6;
+  string thumbnailUri = 7;
+  repeated string keywords = 8;
+  int32 mood = 9;
+  string moodEmoji = 10;
+  NullString otherInfo = 11;
+}
+
+message SocialMediaCredential {
+  string uuid = 1;
+  int64 userId = 2;
+  string providerKey = 3;
+  string providerType = 4;
+  NullString otherInfo = 5;
+}

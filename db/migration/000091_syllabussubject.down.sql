@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Syllabus_Subject cascade;

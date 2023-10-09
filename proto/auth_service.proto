@@ -1,0 +1,20 @@
+syntax = "proto3";
+package simplebank;
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "google/api/annotations.proto";
+import "auth_message.proto";
+
+// Here is the overall Authorized service definition where we define all our endpoints
+service AuthService {
+  rpc Login(LoginRequest) returns (LoginResponse) {
+  // Login to Authorized
+      option (google.api.http) = {
+      post: "/v1/Login"
+      body: "*"
+    };
+  }
+}

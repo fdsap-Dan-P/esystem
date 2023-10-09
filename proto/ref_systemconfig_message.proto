@@ -1,0 +1,23 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+// import "google/protobuf/timestamp.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message SystemConfig {
+  string uuid = 1;
+  int64 officeId = 2;
+  google.protobuf.Timestamp glDate = 3;
+  google.protobuf.Timestamp lastAccruals = 4;
+  google.protobuf.Timestamp lastMonthEnd = 5;
+  google.protobuf.Timestamp nextMonthEnd = 6;
+  google.protobuf.Timestamp systemDate = 7;
+  int32 runState = 8;
+  NullString otherInfo = 9;
+}

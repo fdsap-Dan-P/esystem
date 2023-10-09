@@ -1,0 +1,134 @@
+<html>
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="iie-edge" />
+
+  <title>GopherFace - {{.PageTitle}}</title>
+  <link href="https://fonts.googleapis.com/css?family=Lobster:regular" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/static/css/GenApps.css">
+  <!-- <style>
+
+
+    .form {
+      /* width: 50%; */
+      display: inline-block;
+      position: relative;
+      height: auto;
+      overflow: hidden;
+      /* line-height: 14px; */
+    }
+
+    .form input,
+    .form textarea{
+      width: 100%;
+      /* height: 36px; */
+      color: #595f6e;
+      font-size: 16px;
+      padding-top: 20px;
+      border: 1px;
+      outline: none;
+      /* transform: translateX(100%); */
+      border-bottom: 1px solid #5fa8d3;
+      /* padding-bottom: 20px; */
+    }
+
+    .form textarea {
+      resize: vertical;
+      padding-top: 0px;
+    }
+
+    .form input:focus,
+    .field.fld-textarea textarea:focus {
+      /* border-bottom:  3px solid #5fa8d3; */
+      /* transform: translateX(0%);  */
+      transition: all 0.3s ease;
+      box-shadow: 0px 3px 3px #8ec0dd;
+    }
+
+    .form .field label{
+      position: absolute;
+      top: 20px;
+      display: block;
+      left: 0%;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .form .field label::after {
+      content: "";
+      position: absolute;
+      top: 0px;
+      bottom: -1px;
+      height: 100%;
+      width: 100%;
+
+    }
+
+    .content-name {
+      position:absolute;
+      top: 5px;
+      left: 0px;
+      transition: all 0.3s ease;
+    }
+
+    .form input:focus + .label-name .content-name,
+    .form input:valid + .label-name .content-name,
+    .form textarea:focus + .label-name .content-name,
+    .form textarea:valid + .label-name .content-name
+    {
+      transform: translateY(-150%);
+      font-size: 14px;
+      color: #5fa8d3;
+    }
+
+    /* .form input:focus + .label-name::after,
+    .form input:valid + .label-name::after,
+    .form textarea:focus + .label-name::after,
+    .form textarea:valid + .label-name::after {
+      transform: translateX(0%);
+    } */
+
+    .field {
+      width: 50%;
+      position: relative;
+      line-height: 14px;
+      display: inline-block;
+    }
+    .field.fld-textarea {
+      padding-top: 20px;
+    }
+  </style> -->
+</head>
+
+<body>
+
+  <h1>Animation Input</h1>
+
+  <div class="form">
+    <div class="field">
+      <input type="text" name="EmpName" autocomplete="off" required />
+      <label for="EmpName" class="label-name">
+        <span class="content-name">Name</span>
+      </label>
+    </div>
+    <div class="field">
+      <input type="text" name="EmpAddress" autocomplete="off" required />
+      <label for="EmpAddress" class="label-name">
+        <span class="content-name">Address</span>
+      </label>
+    </div>
+    <div class="field fld-textarea">
+      <textarea type="text" name="caption" autocomplete="off" required></textarea>
+      <label for="caption" class="label-name">
+        <span class="content-name">Caption</span>
+      </label>
+    </div>
+  </div>
+</body>
+
+</html>

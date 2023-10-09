@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Trn_Head_Relation cascade;

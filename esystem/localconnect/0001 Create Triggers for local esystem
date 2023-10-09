@@ -1,0 +1,1783 @@
+use eSystem
+
+-- erase invalid lnBeneficiary
+delete lnBeneficiary where Beneficiary = 'Last Name, First Name MI'
+update lnBeneficiary set BFMName = null where BFMName = 'MI'
+
+-- Get All Primary Key
+/*
+SELECT 
+     KU.table_name as TABLENAME
+    ,column_name as PRIMARYKEYCOLUMN
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TC 
+
+INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS KU
+    ON TC.CONSTRAINT_TYPE = 'PRIMARY KEY' 
+    AND TC.CONSTRAINT_NAME = KU.CONSTRAINT_NAME 
+--    AND KU.table_name='YourTableName'
+
+ORDER BY 
+     KU.TABLE_NAME
+    ,KU.ORDINAL_POSITION
+
+bcp "SELECT dbo.PlainText(DefBranch_Code) BrCode, dbo.PlainText(Acnt_cd), dbo.PlainText(Acnt_Title) FROM Accounts, OrgParms" 
+*/
+
+/*
+IF NOT EXISTS 
+ (SELECT 1 FROM sys.Objects o inner join sys.Columns c on o.object_id  = c.object_id 
+  WHERE o.Name = 'trnMaster' and Type = 'U' and c.Name = 'ID')
+BEGIN
+  Alter Table trnMaster
+  Add ID BigInt Identity(1, 1)
+END
+Go
+
+IF NOT EXISTS 
+ (SELECT 1 FROM sys.Objects o inner join sys.Columns c on o.object_id  = c.object_id 
+  WHERE o.Name = 'SaTrnMaster' and Type = 'U' and c.Name = 'ID')
+BEGIN
+  Alter Table SaTrnMaster
+  Add ID BigInt Identity(1, 1)
+END
+Go
+
+IF NOT EXISTS 
+ (SELECT 1 FROM sys.Objects o inner join sys.Columns c on o.object_id  = c.object_id 
+  WHERE o.Name = 'Mutual_Fund' and Type = 'U' and c.Name = 'ID')
+BEGIN
+  Alter Table Mutual_Fund
+  Add ID BigInt Identity(1, 1)
+END
+Go
+
+*/
+
+------------------------------------------
+-->>> ALTER Insert_trnMaster Trigger
+------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'Insert_trnMaster')
+BEGIN
+    DROP TRIGGER Insert_trnMaster
+END
+GO
+
+CREATE TRIGGER Insert_trnMaster ON trnMaster
+  INSTEAD OF INSERT
+AS 
+BEGIN
+  DECLARE @Trn as Numeric
+--   DECLARE @TrnType as Numeric
+  DECLARE @SysDate as DateTime
+  DECLARE @TrnDate as DateTime
+  SET @SysDate = (SELECT ebSysDate from OrgParms)
+-- Loans
+  SELECT @TrnDate = TrnDate, @Trn = Trn FROM Inserted
+      
+  IF @SysDate = @TrnDate and @Trn < 1000
+  BEGIN
+    SELECT @Trn = IsNull(lnSerial,0)+1 FROM tblSerial 
+    IF IsNull(@Trn,0) < 1000 SET @Trn = 1000
+      UPDATE tblSerial SET lnSerial=@Trn
+  END
+   
+  IF EXISTS (SELECT Acc FROM trnMaster WHERE TrnDate = @TrnDate and Trn = @Trn) 
+  BEGIN
+     SELECT @Trn = Max(Trn) FROM trnMaster WHERE TrnDate = @TrnDate
+     SET @Trn = isNull(@Trn,0) + 1
+     IF @SysDate = @TrnDate 
+     BEGIN
+        UPDATE tblSerial SET lnSerial=@Trn
+     END
+   END 
+
+--   SELECT @TrnType = TrnType FROM Inserted
+  INSERT trnMaster 
+  SELECT  
+    ACC, trnDate, @Trn, OrNo, 
+    Prin, IntR, Oth, Penalty, TrnAmt, WaivedInt, TrnType, 
+    UserName, TermID, Balance, 
+    RefNo, TrnDesc, TrnMnem_CD, Particulars, 
+    [Time], Cancel 
+  FROM Inserted
+
+  INSERT ORTable
+  SELECT 
+    ORNo, TrnType, UserName PostedBy, TrnDate, m.CID, t.Acc, y.AcctType, AcctDesc,
+    t.Prin PrinPay, t.IntR IntPay, 0 SavePay, 0 MBAPay, 0 Withdraw, [Time] TimeTran
+  FROM Inserted t 
+  INNER JOIN lnMaster m on m.Acc = t.Acc
+  INNER JOIN AcctParms y on y.AcctType = m.AcctType
+  WHERE IsNull(OrNo,-1) <> -1 and trnType in (3001,3097,3098,3099,3899,3201,3202)
+END
+GO
+
+
+------------------------------------------
+-->>> ALTER Insert_satrnMaster Trigger
+------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'Insert_satrnMaster')
+BEGIN
+    DROP TRIGGER Insert_satrnMaster
+END
+GO
+
+CREATE TRIGGER [dbo].[Insert_satrnMaster] ON [dbo].[SATRNMASTER]    
+  INSTEAD OF INSERT    
+AS     
+BEGIN    
+   SET NOCOUNT ON;    
+   DECLARE @Trn as Numeric    
+   DECLARE @SysDate as DateTime    
+   DECLARE @TrnDate as DateTime    
+   DECLARE @KeyCode VarChar(20) 
+   DECLARE @CID as integer
+   DECLARE @Msg as Varchar(100)
+      
+   SELECT @TrnDate = TrnDate, @Trn = Trn FROM Inserted    
+   SELECT @SysDate = ebSysDate from OrgParms
+   
+   --for freezing Account
+   -----------------------------------------------------------------------------
+   SELECT @CID = f.CID from inserted i 
+               inner join samaster m on m.acc = i.acc 
+               inner join FreezeCid f on f.cid = m.cid
+   
+   IF @CID is not NULL
+   BEGIN  
+    SET @Msg = 'Cannot Withdraw/Deposit a Freeze Customer with CID= ' + cast(@CID as varchar(10))
+    RAISERROR (@Msg, 16, 1) 
+      RETURN  
+   END 
+   ----------------------------------------------------------------------------   
+                                       
+   SET @KeyCode = Convert(VarChar(10), @TrnDate,21)    
+   IF @Trn = 0 EXEC usp_CodeIncrement saTrnMaster, @KeyCode, @Trn Output    
+       
+   IF EXISTS (SELECT Trn FROM saTrnMaster WHERE TrnDate = @TrnDate and Trn = @Trn)    
+   BEGIN    
+      SELECT @Trn = Max(Trn) FROM satrnMaster WHERE TrnDate = @TrnDate    
+      EXEC usp_CodeIncrement saTrnMaster, @KeyCode, @Trn Output
+   END    
+   --UPDATE tblSerial SET TRNSERIAL=@Trn    
+   --UPDATE ORGPARMS SET ORGPARMS.TRNSERIAL = TBLSERIAL.TRNSERIAL FROM TBLSERIAL    
+      
+   INSERT ORs    
+     SELECT OrNo     
+     FROM INSERTED    
+     WHERE OrNo not in (SELECT OrNo from ORs) and OrNo is not NULL    
+     GROUP BY ORNo    
+   INSERT TrnDates    
+     SELECT TrnDate     
+     FROM INSERTED    
+     WHERE TrnDate not in (SELECT TrnDate from TrnDates)     
+     GROUP BY TrnDate    
+    --IF @SysDate = @TrnDate    
+    --BEGIN    
+    --  UPDATE tblSerial SET TRNSERIAL=@Trn    
+    --  UPDATE OrgParms SET trnSerial = @Trn    
+    --END     
+   INSERT satrnMaster     
+   SELECT 
+     CID, AccrdInt, CumAccrdInt, TLRPendAuth, PBKPosted, Financial, PendApprove,    
+     RefDate, trnDate, CASE WHEN Trn = 0 THEN @Trn ELSE Trn END, Acc, AppType, trnType, PendNo, UserName, UserLevel,    
+     TermID, trnAmt, Balance, RefNo, trnMnem_CD, Particulars, AvlBal, [Time], ORNo    
+   FROM Inserted    
+
+   INSERT ORTable     
+   SELECT 
+     ORNo, TrnType, UserName PostedBy, TrnDate, m.CID, t.Acc, y.AcctType, AcctDesc,     
+     0 PrinPay, 0 IntPay,    
+     CASE WHEN TrnType % 2 = 1 THEN TrnAmt ELSE 0 END SavePay, 0 MBAPay,    
+     CASE WHEN TrnType % 2 = 0 THEN TrnAmt ELSE 0 END Withdraw, [Time] TimeTran    
+   FROM Inserted t     
+   INNER JOIN saMaster m  on m.Acc = t.Acc    
+   INNER JOIN AcctParms y on y.AcctType = m.Type    
+   WHERE IsNull(OrNo,0) <> 0 and PendApprove = 'A' AND m.Type in (60,80,30)  
+           
+   INSERT INTO DataAudit(
+     TableName,CID,Acc,TrnDate,Time,Trn,RefNo,Orno,AuditAction,AuditComp)     
+   SELECT 
+     'SATRNMASTER',CID,Acc,TrnDate,Time,Trn,Convert(Varchar(25),RefNo), 
+     Orno,'I',HOST_NAME() FROM Inserted    
+END
+
+-->>> CREATE [Area] Table
+IF NOT EXISTS 
+ (SELECT 1 FROM sys.Objects 
+  WHERE Name = 'Modified' and Type = 'U')
+BEGIN
+  CREATE TABLE Modified(
+    ModCtr BigInt IDENTITY(1,1),
+    TableName VarChar(30),
+    UniqueKeyInt1 Numeric(18,0) NOT NULL Default 0, -- AreaCode
+    UniqueKeyInt2 Numeric(18,0) NOT NULL Default 0,
+    UniqueKeyInt3 Numeric(18,0) NOT NULL Default 0,
+    UniqueKeyDate DateTime NOT NULL Default 0,
+    UniqueKeyString1 VarChar(100) NOT NULL Default '',     
+    UniqueKeyString2 VarChar(100) NOT NULL Default '',    
+    ModAction Char(1),
+    Uploaded bit NOT NULL DEFAULT 0,    
+ CONSTRAINT pkModified Primary Key (ModCtr)
+  )
+END
+GO
+
+CREATE INDEX idxModified ON Modified (TableName,UniqueKeyInt1,UniqueKeyInt2,UniqueKeyInt3,UniqueKeyDate,UniqueKeyString1,UniqueKeyString2);
+
+-- update Modified set Uploaded  = 0 where Uploaded = 1
+-- drop index idxModified on Modified
+
+-- alter table Modified add Uploaded Bit NOT NULL CONSTRAINT Def_ModifedUpded DEFAULT 0
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Area] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Area')
+BEGIN
+    DROP TRIGGER trgModCtr_Area
+END
+GO
+
+CREATE TRIGGER trgModCtr_Area
+ON Area
+FOR INSERT, UPDATE 
+AS 
+
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT AreaCode FROM deleted)
+    SET @Operation = 'U' 
+  
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Area' TableName, Inserted.AreaCode UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Area] Table
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Area] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Area_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Area_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Area_Del
+ON Area
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Area' TableName, DELETED.AreaCode UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Managers] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Managers')
+BEGIN
+    DROP TRIGGER trgModCtr_Managers
+END
+GO
+
+CREATE TRIGGER trgModCtr_Managers
+ON Managers
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT ManCode FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Managers' TableName, Inserted.ManCode UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Managers] Table
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Managers] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Managers_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Managers_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Managers_Del
+ON Managers
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Managers' TableName, DELETED.ManCode UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [Managers] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Center] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Center')
+BEGIN
+    DROP TRIGGER trgModCtr_Center
+END
+GO
+
+CREATE TRIGGER trgModCtr_Center
+ON Center
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT Center_Code FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'Center' TableName, Inserted.Center_Code UniqueKeyString1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Center] Table
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Center] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Center_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Center_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Center_Del
+ON Center
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'Center' TableName, DELETED.Center_Code UniqueKeyString1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [Center] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Customer] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Customer')
+BEGIN
+    DROP TRIGGER trgModCtr_Customer
+END
+GO
+
+CREATE TRIGGER trgModCtr_Customer
+ON Customer
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT CID FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Customer' TableName, Inserted.CID UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Customer] Table
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Customer] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Customer_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Customer_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Customer_Del
+ON Customer
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Customer' TableName, DELETED.CID UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Addresses] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Addresses')
+BEGIN
+    DROP TRIGGER trgModCtr_Addresses
+END
+GO
+
+CREATE TRIGGER trgModCtr_Addresses
+ON Addresses
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT SEQNUM FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Addresses' TableName, Inserted.SEQNUM UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Addresses] Table
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Addresses] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Addresses_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Addresses_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Addresses_Del
+ON Addresses
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Addresses' TableName, DELETED.SEQNUM UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [Addresses] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [lnMaster] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_lnMaster')
+BEGIN
+    DROP TRIGGER trgModCtr_lnMaster
+END
+GO
+
+CREATE TRIGGER trgModCtr_lnMaster
+ON lnMaster
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT ACC FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'lnMaster' TableName, Inserted.ACC UniqueKeyString1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [lnMaster] Table
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [lnMaster] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_lnMaster_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_lnMaster_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_lnMaster_Del
+ON lnMaster
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'lnMaster' TableName, DELETED.ACC UniqueKeyString1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [lnMaster] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [saMaster] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_saMaster')
+BEGIN
+    DROP TRIGGER trgModCtr_saMaster
+END
+GO
+
+CREATE TRIGGER trgModCtr_saMaster
+ON saMaster
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT ACC FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'saMaster' TableName, Inserted.ACC UniqueKeyString1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [saMaster] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [saMaster] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_saMaster_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_saMaster_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_saMaster_Del
+ON saMaster
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'saMaster' TableName, DELETED.ACC UniqueKeyString1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [saMaster] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [trnMaster] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_trnMaster')
+BEGIN
+    DROP TRIGGER trgModCtr_trnMaster
+END
+GO
+
+CREATE TRIGGER trgModCtr_trnMaster
+ON trnMaster
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT TRNDATE FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyDate, UniqueKeyInt1, ModAction)
+  SELECT
+    'trnMaster' TableName, Inserted.TRNDATE UniqueKeyDate, Trn UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [trnMaster] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [trnMaster] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_trnMaster_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_trnMaster_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_trnMaster_Del
+ON trnMaster
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyDate, UniqueKeyInt1, ModAction)
+  SELECT
+    'trnMaster' TableName, DELETED.trnDate UniqueKeyDate, Trn UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [trnMaster] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [satrnMaster] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_satrnMaster')
+BEGIN
+    DROP TRIGGER trgModCtr_satrnMaster
+END
+GO
+
+CREATE TRIGGER trgModCtr_satrnMaster
+ON satrnMaster
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT TRNDATE FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyDate, UniqueKeyInt1, ModAction)
+  SELECT
+    'satrnMaster' TableName, Inserted.TRNDATE UniqueKeyDate, Trn UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [satrnMaster] Table
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [satrnMaster] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_satrnMaster_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_satrnMaster_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_satrnMaster_Del
+ON satrnMaster
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyDate, UniqueKeyInt1, ModAction)
+  SELECT
+    'satrnMaster' TableName, DELETED.TRNDATE UniqueKeyDate, Trn UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [satrnMaster] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [satrnMaster] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_LoanInst')
+BEGIN
+    DROP TRIGGER trgModCtr_LoanInst
+END
+GO
+
+CREATE TRIGGER trgModCtr_LoanInst
+ON LoanInst
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT ACC FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, UniqueKeyInt1, ModAction)
+  SELECT
+    'LoanInst' TableName, Inserted.ACC UniqueKeyString1, dNum UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [LoanInst] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [LoanInst] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_LoanInst_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_LoanInst_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_LoanInst_Del
+ON LoanInst
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyString1, UniqueKeyInt1, ModAction)
+  SELECT
+    'LoanInst' TableName, DELETED.ACC UniqueKeyString1, dNum UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [LoanInst] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [lnChrgData] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_lnChrgData')
+BEGIN
+    DROP TRIGGER trgModCtr_lnChrgData
+END
+GO
+
+CREATE TRIGGER trgModCtr_lnChrgData
+ON lnChrgData
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT ACC FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, UniqueKeyInt1, UniqueKeyString2, ModAction)
+  SELECT
+    'lnChrgData' TableName, Inserted.ACC UniqueKeyString1, ChrgCode UniqueKeyInt1, RefAcc UniqueKeyString2, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [lnChrgData] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [lnChrgData] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_lnChrgData_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_lnChrgData_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_lnChrgData_Del
+ON lnChrgData
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyString1, UniqueKeyInt1, UniqueKeyString2, ModAction)
+  SELECT
+    'lnChrgData' TableName, DELETED.ACC UniqueKeyString1, ChrgCode UniqueKeyInt1, RefAcc UniqueKeyString2, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [lnChrgData] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [CustAddInfoList] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_CustAddInfoList')
+BEGIN
+    DROP TRIGGER trgModCtr_CustAddInfoList
+END
+GO
+
+CREATE TRIGGER trgModCtr_CustAddInfoList
+ON CustAddInfoList
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT INFOCODE FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'CustAddInfoList' TableName, Inserted.INFOCODE UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [CustAddInfoList] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [CustAddInfoList] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_CustAddInfoList_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_CustAddInfoList_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_CustAddInfoList_Del
+ON CustAddInfoList
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'CustAddInfoList' TableName, DELETED.INFOCODE UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [CustAddInfoList] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [CustAddInfoGroup] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_CustAddInfoGroup')
+BEGIN
+    DROP TRIGGER trgModCtr_CustAddInfoGroup
+END
+GO
+
+CREATE TRIGGER trgModCtr_CustAddInfoGroup
+ON CustAddInfoGroup
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT INFOGROUP FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'CustAddInfoGroup' TableName, Inserted.INFOGROUP UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [CustAddInfoGroup] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [CustAddInfoGroup] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_CustAddInfoGroup_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_CustAddInfoGroup_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_CustAddInfoGroup_Del
+ON CustAddInfoGroup
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'CustAddInfoGroup' TableName, DELETED.INFOGROUP UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [CustAddInfoGroup] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [CustAddInfoGroupNeed] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_CustAddInfoGroupNeed')
+BEGIN
+    DROP TRIGGER trgModCtr_CustAddInfoGroupNeed
+END
+GO
+
+CREATE TRIGGER trgModCtr_CustAddInfoGroupNeed
+ON CustAddInfoGroupNeed
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT INFOGROUP FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, UniqueKeyInt2, ModAction)
+  SELECT
+    'CustAddInfoGroupNeed' TableName, INSERTED.INFOGROUP UniqueKeyInt1, INSERTED.InfoCode UniqueKeyInt2, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [CustAddInfoGroupNeed] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [CustAddInfoGroupNeed] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_CustAddInfoGroupNeed_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_CustAddInfoGroupNeed_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_CustAddInfoGroupNeed_Del
+ON CustAddInfoGroupNeed
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName,  UniqueKeyInt1, UniqueKeyInt2, ModAction)
+  SELECT
+    'CustAddInfoGroupNeed' TableName, DELETED.INFOGROUP UniqueKeyInt1, DELETED.InfoCode UniqueKeyInt2, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [CustAddInfoGroupNeed] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [CustAddInfo] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_CustAddInfo')
+BEGIN
+    DROP TRIGGER trgModCtr_CustAddInfo
+END
+GO
+
+CREATE TRIGGER trgModCtr_CustAddInfo
+ON CustAddInfo
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT CID FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, UniqueKeyInt2, UniqueKeyDate, ModAction)
+  SELECT
+    'CustAddInfo' TableName, Inserted.CID UniqueKeyInt1,  
+    Inserted.InfoCode UniqueKeyInt2,  Inserted.InfoDate UniqueKeyDate, 
+    @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [CustAddInfo] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [CustAddInfo] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_CustAddInfo_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_CustAddInfo_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_CustAddInfo_Del
+ON CustAddInfo
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, UniqueKeyInt2, UniqueKeyDate, ModAction)
+  SELECT
+    'CustAddInfo' TableName, DELETED.CID UniqueKeyInt1,  
+    DELETED.InfoCode UniqueKeyInt2,  DELETED.InfoDate UniqueKeyDate, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [CustAddInfo] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Mutual_Fund] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Mutual_Fund')
+BEGIN
+    DROP TRIGGER trgModCtr_Mutual_Fund
+END
+GO
+
+CREATE TRIGGER trgModCtr_Mutual_Fund
+ON Mutual_Fund
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT MFCID FROM deleted)
+  SET @Operation = 'U' 
+  
+  INSERT Modified
+    (TableName, UniqueKeyInt1, UniqueKeyInt2, UniqueKeyDate, ModAction)
+  SELECT
+    'Mutual_Fund' TableName, Inserted.MFCID UniqueKeyInt1, Inserted.MFOrNumber UniqueKeyInt2,  Inserted.MFDate UniqueKeyDate, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Mutual_Fund] Table
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Mutual_Fund] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Mutual_Fund_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Mutual_Fund_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Mutual_Fund_Del
+ON Mutual_Fund
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, UniqueKeyInt2, UniqueKeyDate, ModAction)
+  SELECT
+    'Mutual_Fund' TableName, DELETED.MFCID UniqueKeyInt1, DELETED.MFOrNumber UniqueKeyInt2, DELETED.MFDate UniqueKeyDate, 'D' ModAction
+  FROM DELETED
+GO
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [ReferencesDetails] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_ReferencesDetails')
+BEGIN
+    DROP TRIGGER trgModCtr_ReferencesDetails
+END
+GO
+
+CREATE TRIGGER trgModCtr_ReferencesDetails
+ON ReferencesDetails
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT ID FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'ReferencesDetails' TableName, Inserted.ID UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [ReferencesDetails] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [ReferencesDetails] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_ReferencesDetails_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_ReferencesDetails_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_ReferencesDetails_Del
+ON ReferencesDetails
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'ReferencesDetails' TableName, DELETED.ID UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [ReferencesDetails] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Center_Worker] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Center_Worker')
+BEGIN
+    DROP TRIGGER trgModCtr_Center_Worker
+END
+GO
+
+CREATE TRIGGER trgModCtr_Center_Worker
+ON Center_Worker
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT CENTERW_ID FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Center_Worker' TableName, Inserted.CENTERW_ID UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Center_Worker] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Center_Worker] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Center_Worker_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Center_Worker_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Center_Worker_Del
+ON Center_Worker
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'Center_Worker' TableName, DELETED.CENTERW_ID UniqueKeyInt1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [Center_Worker] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Writeoff] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Writeoff')
+BEGIN
+    DROP TRIGGER trgModCtr_Writeoff
+END
+GO
+
+CREATE TRIGGER trgModCtr_Writeoff
+ON Writeoff
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT ACC FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'Writeoff' TableName, Inserted.ACC UniqueKeyString1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Writeoff] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Writeoff] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Writeoff_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Writeoff_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Writeoff_Del
+ON Writeoff
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'Writeoff' TableName, DELETED.ACC UniqueKeyString1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [Writeoff] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Accounts] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Accounts')
+BEGIN
+    DROP TRIGGER trgModCtr_Accounts
+END
+GO
+
+CREATE TRIGGER trgModCtr_Accounts
+ON Accounts
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT ACNT_CD FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'Accounts' TableName, Inserted.ACNT_CD UniqueKeyString1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Accounts] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Accounts] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Accounts_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Accounts_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Accounts_Del
+ON Accounts
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'Accounts' TableName, DELETED.ACNT_CD UniqueKeyString1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [Accounts] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [jnlHeaders] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_jnlHeaders')
+BEGIN
+    DROP TRIGGER trgModCtr_jnlHeaders
+END
+GO
+
+CREATE TRIGGER trgModCtr_jnlHeaders
+ON jnlHeaders
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT JNLH_TRAN FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'jnlHeaders' TableName, Inserted.JNLH_TRAN UniqueKeyString1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [jnlHeaders] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [jnlHeaders] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_jnlHeaders_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_jnlHeaders_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_jnlHeaders_Del
+ON jnlHeaders
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'jnlHeaders' TableName, DELETED.JNLH_TRAN UniqueKeyString1, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [jnlHeaders] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [jnlDetails] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_jnlDetails')
+BEGIN
+    DROP TRIGGER trgModCtr_jnlDetails
+END
+GO
+
+CREATE TRIGGER trgModCtr_jnlDetails
+ON jnlDetails
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT JNLD_JNLH_TRAN FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, UniqueKeyString2, ModAction)
+  SELECT
+    'jnlDetails' TableName, Inserted.JNLD_JNLH_TRAN UniqueKeyString1, Inserted.JNLD_Acnt_CD UniqueKeyString2, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [jnlDetails] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [jnlDetails] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_jnlDetails_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_jnlDetails_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_jnlDetails_Del
+ON jnlDetails
+FOR DELETE 
+AS 
+  INSERT Modified
+    (TableName, UniqueKeyString1, UniqueKeyString2, ModAction)
+  SELECT
+    'jnlDetails' TableName,  DELETED.JNLD_JNLH_TRAN UniqueKeyString1, DELETED.JNLD_Acnt_CD UniqueKeyString2, 'D' ModAction
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [jnlDetails] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [Ledger_Details] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Ledger_Details')
+BEGIN
+    DROP TRIGGER trgModCtr_Ledger_Details
+END
+GO
+
+CREATE TRIGGER trgModCtr_Ledger_Details
+ON Ledger_Details
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT Ledgdet_TrnDate FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyDate, UniqueKeyString1, ModAction)
+  SELECT
+    'Ledger_Details' TableName, Inserted.Ledgdet_TrnDate UniqueKeyDate, 
+    Inserted.Ledgdet_Acct_Code UniqueKeyString1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [Ledger_Details] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [Ledger_Details] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_Ledger_Details_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_Ledger_Details_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_Ledger_Details_Del
+ON Ledger_Details
+FOR DELETE 
+AS 
+INSERT Modified
+    (TableName, UniqueKeyDate, UniqueKeyString1, ModAction)
+  SELECT
+    'Ledger_Details' TableName, DELETED.Ledgdet_TrnDate UniqueKeyDate, 
+    DELETED.Ledgdet_Acct_Code UniqueKeyString1, 'D' ModAction 
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [Ledger_Details] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [MultiplePaymentReceipt] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_MultiplePaymentReceipt')
+BEGIN
+    DROP TRIGGER trgModCtr_MultiplePaymentReceipt
+END
+GO
+
+CREATE TRIGGER trgModCtr_MultiplePaymentReceipt
+ON MultiplePaymentReceipt
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT OrNo FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'MultiplePaymentReceipt' TableName, Inserted.OrNo UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [MultiplePaymentReceipt] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [MultiplePaymentReceipt] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_MultiplePaymentReceipt_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_MultiplePaymentReceipt_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_MultiplePaymentReceipt_Del
+ON MultiplePaymentReceipt
+FOR DELETE 
+AS 
+INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'MultiplePaymentReceipt' TableName, DELETED.OrNo UniqueKeyInt1, 'D' ModAction 
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [MultiplePaymentReceipt] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [UsersList] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_UsersList')
+BEGIN
+    DROP TRIGGER trgModCtr_UsersList
+END
+GO
+
+CREATE TRIGGER trgModCtr_UsersList
+ON UsersList
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT UserId FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'UsersList' TableName, Inserted.UserId UniqueKeyString1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [UsersList] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [UsersList] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_UsersList_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_UsersList_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_UsersList_Del
+ON UsersList
+FOR DELETE 
+AS 
+INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'UsersList' TableName, DELETED.UserID UniqueKeyString1, 'D' ModAction 
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [UsersList] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [InactiveCID] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_InactiveCID')
+BEGIN
+    DROP TRIGGER trgModCtr_InactiveCID
+END
+GO
+
+CREATE TRIGGER trgModCtr_InactiveCID
+ON InactiveCID
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT CID FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, UniqueKeyDate, ModAction)
+  SELECT
+    'InactiveCID' TableName, Inserted.CID UniqueKeyInt1, Inserted.Date_Start UniqueKeyDate, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [InactiveCID] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [InactiveCID] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_InactiveCID_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_InactiveCID_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_InactiveCID_Del
+ON InactiveCID
+FOR DELETE 
+AS 
+INSERT Modified
+    (TableName, UniqueKeyInt1, UniqueKeyDate, ModAction)
+  SELECT
+    'InactiveCID' TableName, Deleted.CID UniqueKeyInt1, Deleted.Date_Start, 'D' ModAction 
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [InactiveCID] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [ReactivateWriteoff] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_ReactivateWriteoff')
+BEGIN
+    DROP TRIGGER trgModCtr_ReactivateWriteoff
+END
+GO
+
+CREATE TRIGGER trgModCtr_ReactivateWriteoff
+ON ReactivateWriteoff
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT ID FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'ReactivateWriteoff' TableName, Inserted.ID UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [ReactivateWriteoff] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [ReactivateWriteoff] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_ReactivateWriteoff_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_ReactivateWriteoff_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_ReactivateWriteoff_Del
+ON ReactivateWriteoff
+FOR DELETE 
+AS 
+INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'ReactivateWriteoff' TableName, Deleted.ID UniqueKeyInt1, 'D' ModAction 
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [ReactivateWriteoff] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [LnBeneficiary] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_LnBeneficiary')
+BEGIN
+    DROP TRIGGER trgModCtr_LnBeneficiary
+END
+GO
+
+CREATE TRIGGER trgModCtr_LnBeneficiary
+ON LnBeneficiary
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT Acc FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'LnBeneficiary' TableName, Inserted.Acc UniqueKeyString1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [LnBeneficiary] Table
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [LnBeneficiary] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_LnBeneficiary_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_LnBeneficiary_Del
+END
+GO
+
+CREATE TRIGGER trgModCtr_LnBeneficiary_Del
+ON LnBeneficiary
+FOR DELETE 
+AS 
+INSERT Modified
+    (TableName, UniqueKeyString1, ModAction)
+  SELECT
+    'LnBeneficiary' TableName, Deleted.Acc UniqueKeyString1, 'D' ModAction 
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [LnBeneficiary] Table
+---------------------------------------------------------------------------
+

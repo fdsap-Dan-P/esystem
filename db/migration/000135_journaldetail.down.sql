@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Journal_Detail cascade;

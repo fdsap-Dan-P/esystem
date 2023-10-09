@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Product_Ticket_Type cascade;

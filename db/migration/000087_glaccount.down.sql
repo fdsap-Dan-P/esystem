@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS GL_Account cascade;

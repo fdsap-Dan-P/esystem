@@ -1,0 +1,3624 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "esystemdump_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "DumpService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/DumpAccounts/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpAccounts",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpAccountsResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpAccountsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpAccountsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpAddresses/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpAddresses",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpAddressesResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpAddressesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpAddressesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpArea/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpArea",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpAreaResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpAreaResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpAreaRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpBranchList": {
+      "post": {
+        "operationId": "DumpService_ListDumpBranchList",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankDumpBranchList"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankDumpBranchList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebanknoParam"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpBranchList/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpBranchList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpBranchListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpBranchListRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpBranchList/get": {
+      "post": {
+        "operationId": "DumpService_GetDumpBranchList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankDumpBranchList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankGetDumpBranchListRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpBranchList/update": {
+      "post": {
+        "operationId": "DumpService_UpdateDumpBranchList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/simplebankUpdateDumpBranchListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankUpdateDumpBranchListRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpCenter/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpCenter",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpCenterResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpCenterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpCenterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpCenterWorker/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpCenterWorker",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpCenterWorkerResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpCenterWorkerResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpCenterWorkerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpColSht/create": {
+      "post": {
+        "operationId": "DumpService_GetDumpColSht",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpColShtResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpColShtResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpColShtRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpCustAddInfo/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpCustAddInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpCustAddInfoResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpCustAddInfoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpCustAddInfoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpCustAddInfoGroup/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpCustAddInfoGroup",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpCustAddInfoGroupResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpCustAddInfoGroupResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpCustAddInfoGroupRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpCustAddInfoGroupNeed/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpCustAddInfoGroupNeed",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpCustAddInfoGroupNeedResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpCustAddInfoGroupNeedResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpCustAddInfoGroupNeedRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpCustAddInfoList/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpCustAddInfoList",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpCustAddInfoListResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpCustAddInfoListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpCustAddInfoListRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpCustomer/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpCustomer",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpCustomerResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpCustomerResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpCustomerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpInActiveCID/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpInActiveCID",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpInActiveCIDResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpInActiveCIDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpInActiveCIDRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpJnlDetails/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpJnlDetails",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpJnlDetailsResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpJnlDetailsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpJnlDetailsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpJnlHeaders/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpJnlHeaders",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpJnlHeadersResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpJnlHeadersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpJnlHeadersRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpLedgerDetails/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpLedgerDetails",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpLedgerDetailsResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpLedgerDetailsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpLedgerDetailsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpLnBeneficiary/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpLnBeneficiary",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpLnBeneficiaryResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpLnBeneficiaryResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpLnBeneficiaryRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpLnChrgData/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpLnChrgData",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpLnChrgDataResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpLnChrgDataResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpLnChrgDataRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpLnMaster/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpLnMaster",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpLnMasterResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpLnMasterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpLnMasterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpLoanInst/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpLoanInst",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpLoanInstResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpLoanInstResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpLoanInstRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpModifiedTable": {
+      "post": {
+        "operationId": "DumpService_GetModifiedTable",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankDumpModifiedTable"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankDumpModifiedTable"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankGetModifiedTableRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpMultiplePaymentReceipt/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpMultiplePaymentReceipt",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpMultiplePaymentReceiptResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpMultiplePaymentReceiptResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpMultiplePaymentReceiptRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpMutualFund/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpMutualFund",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpMutualFundResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpMutualFundResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpMutualFundRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpReactivateWriteoff/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpReactivateWriteoff",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpReactivateWriteoffResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpReactivateWriteoffResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpReactivateWriteoffRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpReferencesDetails/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpReferencesDetails",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpReferencesDetailsResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpReferencesDetailsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpReferencesDetailsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpSaMaster/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpSaMaster",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpSaMasterResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpSaMasterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpSaMasterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpSaTrnMaster/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpSaTrnMaster",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpSaTrnMasterResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpSaTrnMasterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpSaTrnMasterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpTrnMaster/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpTrnMaster",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpTrnMasterResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpTrnMasterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpTrnMasterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpUnit/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpUnit",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpUnitResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpUnitResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpUnitRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpUsersList/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpUsersList",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpUsersListResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpUsersListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpUsersListRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    },
+    "/v1/DumpWriteoff/create": {
+      "post": {
+        "operationId": "DumpService_CreateDumpWriteoff",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/simplebankCreateDumpWriteoffResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of simplebankCreateDumpWriteoffResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/simplebankCreateDumpWriteoffRequest"
+            }
+          }
+        ],
+        "tags": [
+          "DumpService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpAccountsRequest": {
+      "type": "object",
+      "properties": {
+        "accounts": {
+          "$ref": "#/definitions/simplebankDumpAccounts"
+        }
+      }
+    },
+    "simplebankCreateDumpAccountsResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpAddressesRequest": {
+      "type": "object",
+      "properties": {
+        "addresses": {
+          "$ref": "#/definitions/simplebankDumpAddresses"
+        }
+      }
+    },
+    "simplebankCreateDumpAddressesResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpAreaRequest": {
+      "type": "object",
+      "properties": {
+        "area": {
+          "$ref": "#/definitions/simplebankDumpArea"
+        }
+      }
+    },
+    "simplebankCreateDumpAreaResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpBranchListRequest": {
+      "type": "object",
+      "properties": {
+        "branchList": {
+          "$ref": "#/definitions/simplebankDumpBranchList"
+        }
+      }
+    },
+    "simplebankCreateDumpBranchListResponse": {
+      "type": "object",
+      "properties": {
+        "brCode": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankCreateDumpCenterRequest": {
+      "type": "object",
+      "properties": {
+        "center": {
+          "$ref": "#/definitions/simplebankDumpCenter"
+        }
+      }
+    },
+    "simplebankCreateDumpCenterResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpCenterWorkerRequest": {
+      "type": "object",
+      "properties": {
+        "centerWorker": {
+          "$ref": "#/definitions/simplebankDumpCenterWorker"
+        }
+      }
+    },
+    "simplebankCreateDumpCenterWorkerResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpColShtRequest": {
+      "type": "object",
+      "properties": {
+        "colSht": {
+          "$ref": "#/definitions/simplebankDumpColSht"
+        }
+      }
+    },
+    "simplebankCreateDumpColShtResponse": {
+      "type": "object",
+      "properties": {
+        "acc": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpCustAddInfoGroupNeedRequest": {
+      "type": "object",
+      "properties": {
+        "custAddInfoGroupNeed": {
+          "$ref": "#/definitions/simplebankDumpCustAddInfoGroupNeed"
+        }
+      }
+    },
+    "simplebankCreateDumpCustAddInfoGroupNeedResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpCustAddInfoGroupRequest": {
+      "type": "object",
+      "properties": {
+        "custAddInfoGroup": {
+          "$ref": "#/definitions/simplebankDumpCustAddInfoGroup"
+        }
+      }
+    },
+    "simplebankCreateDumpCustAddInfoGroupResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpCustAddInfoListRequest": {
+      "type": "object",
+      "properties": {
+        "custAddInfoList": {
+          "$ref": "#/definitions/simplebankDumpCustAddInfoList"
+        }
+      }
+    },
+    "simplebankCreateDumpCustAddInfoListResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpCustAddInfoRequest": {
+      "type": "object",
+      "properties": {
+        "custAddInfo": {
+          "$ref": "#/definitions/simplebankDumpCustAddInfo"
+        }
+      }
+    },
+    "simplebankCreateDumpCustAddInfoResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpCustomerRequest": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "$ref": "#/definitions/simplebankDumpCustomer"
+        }
+      }
+    },
+    "simplebankCreateDumpCustomerResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpInActiveCIDRequest": {
+      "type": "object",
+      "properties": {
+        "inActiveCID": {
+          "$ref": "#/definitions/simplebankDumpInActiveCID"
+        }
+      }
+    },
+    "simplebankCreateDumpInActiveCIDResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpJnlDetailsRequest": {
+      "type": "object",
+      "properties": {
+        "jnlDetails": {
+          "$ref": "#/definitions/simplebankDumpJnlDetails"
+        }
+      }
+    },
+    "simplebankCreateDumpJnlDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpJnlHeadersRequest": {
+      "type": "object",
+      "properties": {
+        "jnlHeaders": {
+          "$ref": "#/definitions/simplebankDumpJnlHeaders"
+        }
+      }
+    },
+    "simplebankCreateDumpJnlHeadersResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpLedgerDetailsRequest": {
+      "type": "object",
+      "properties": {
+        "ledgerDetails": {
+          "$ref": "#/definitions/simplebankDumpLedgerDetails"
+        }
+      }
+    },
+    "simplebankCreateDumpLedgerDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpLnBeneficiaryRequest": {
+      "type": "object",
+      "properties": {
+        "lnBeneficiary": {
+          "$ref": "#/definitions/simplebankDumpLnBeneficiary"
+        }
+      }
+    },
+    "simplebankCreateDumpLnBeneficiaryResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpLnChrgDataRequest": {
+      "type": "object",
+      "properties": {
+        "lnChrgData": {
+          "$ref": "#/definitions/simplebankDumpLnChrgData"
+        }
+      }
+    },
+    "simplebankCreateDumpLnChrgDataResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpLnMasterRequest": {
+      "type": "object",
+      "properties": {
+        "lnMaster": {
+          "$ref": "#/definitions/simplebankDumpLnMaster"
+        }
+      }
+    },
+    "simplebankCreateDumpLnMasterResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpLoanInstRequest": {
+      "type": "object",
+      "properties": {
+        "loanInst": {
+          "$ref": "#/definitions/simplebankDumpLoanInst"
+        }
+      }
+    },
+    "simplebankCreateDumpLoanInstResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpMultiplePaymentReceiptRequest": {
+      "type": "object",
+      "properties": {
+        "multiplePaymentReceipt": {
+          "$ref": "#/definitions/simplebankDumpMultiplePaymentReceipt"
+        }
+      }
+    },
+    "simplebankCreateDumpMultiplePaymentReceiptResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpMutualFundRequest": {
+      "type": "object",
+      "properties": {
+        "mutualFund": {
+          "$ref": "#/definitions/simplebankDumpMutualFund"
+        }
+      }
+    },
+    "simplebankCreateDumpMutualFundResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpReactivateWriteoffRequest": {
+      "type": "object",
+      "properties": {
+        "reactivateWriteoff": {
+          "$ref": "#/definitions/simplebankDumpReactivateWriteoff"
+        }
+      }
+    },
+    "simplebankCreateDumpReactivateWriteoffResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpReferencesDetailsRequest": {
+      "type": "object",
+      "properties": {
+        "referencesDetails": {
+          "$ref": "#/definitions/simplebankDumpReferencesDetails"
+        }
+      }
+    },
+    "simplebankCreateDumpReferencesDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpSaMasterRequest": {
+      "type": "object",
+      "properties": {
+        "saMaster": {
+          "$ref": "#/definitions/simplebankDumpSaMaster"
+        }
+      }
+    },
+    "simplebankCreateDumpSaMasterResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpSaTrnMasterRequest": {
+      "type": "object",
+      "properties": {
+        "saTrnMaster": {
+          "$ref": "#/definitions/simplebankDumpSaTrnMaster"
+        }
+      }
+    },
+    "simplebankCreateDumpSaTrnMasterResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpTrnMasterRequest": {
+      "type": "object",
+      "properties": {
+        "TrnMaster": {
+          "$ref": "#/definitions/simplebankDumpTrnMaster"
+        }
+      }
+    },
+    "simplebankCreateDumpTrnMasterResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpUnitRequest": {
+      "type": "object",
+      "properties": {
+        "unit": {
+          "$ref": "#/definitions/simplebankDumpUnit"
+        }
+      }
+    },
+    "simplebankCreateDumpUnitResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpUsersListRequest": {
+      "type": "object",
+      "properties": {
+        "usersList": {
+          "$ref": "#/definitions/simplebankDumpUsersList"
+        }
+      }
+    },
+    "simplebankCreateDumpUsersListResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankCreateDumpWriteoffRequest": {
+      "type": "object",
+      "properties": {
+        "writeoff": {
+          "$ref": "#/definitions/simplebankDumpWriteoff"
+        }
+      }
+    },
+    "simplebankCreateDumpWriteoffResponse": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "simplebankDecimal": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "simplebankDumpAccounts": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "format": "int64"
+        },
+        "type": {
+          "type": "string"
+        },
+        "mainCD": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "parent": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpAddresses": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "seqNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "addressDetails": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "barangay": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "city": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "province": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "phone1": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "phone2": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "phone3": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "phone4": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpArea": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "areaCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "area": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpBranchList": {
+      "type": "object",
+      "properties": {
+        "brCode": {
+          "type": "string"
+        },
+        "ebSysDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "runState": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orgAddress": {
+          "type": "string"
+        },
+        "taxInfo": {
+          "type": "string"
+        },
+        "defCity": {
+          "type": "string"
+        },
+        "defProvince": {
+          "type": "string"
+        },
+        "defCountry": {
+          "type": "string"
+        },
+        "defZip": {
+          "type": "string"
+        },
+        "waivableInt": {
+          "type": "boolean"
+        },
+        "dBVersion": {
+          "type": "string"
+        },
+        "eSystemVer": {
+          "type": "string",
+          "format": "byte"
+        },
+        "newBrCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lastConnection": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "simplebankDumpCenter": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "centerCode": {
+          "type": "string"
+        },
+        "centerName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "centerAddress": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "meetingDay": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "unit": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "dateEstablished": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "aOID": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        }
+      }
+    },
+    "simplebankDumpCenterWorker": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "aOID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lname": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "fName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "mname": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "phoneNumber": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpColSht": {
+      "type": "object",
+      "properties": {
+        "brCode": {
+          "type": "string"
+        },
+        "appType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "code": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "uM": {
+          "type": "string"
+        },
+        "clientName": {
+          "type": "string"
+        },
+        "centerCode": {
+          "type": "string"
+        },
+        "centerName": {
+          "type": "string"
+        },
+        "manCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "areaCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "area": {
+          "type": "string"
+        },
+        "staffName": {
+          "type": "string"
+        },
+        "acctType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "acctDesc": {
+          "type": "string"
+        },
+        "disbDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dateStart": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "maturity": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "principal": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "interest": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "gives": {
+          "type": "string",
+          "format": "int64"
+        },
+        "balPrin": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "balInt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "amort": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "duePrin": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "dueInt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "loanBal": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "saveBal": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "waivedInt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "unPaidCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "WrittenOff": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orgName": {
+          "type": "string"
+        },
+        "orgAddress": {
+          "type": "string"
+        },
+        "meetingDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "meetingDay": {
+          "type": "string",
+          "format": "int64"
+        },
+        "sharesOfStock": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "dateEstablished": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "classification": {
+          "type": "string",
+          "format": "int64"
+        },
+        "writeOff": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankDumpCustAddInfo": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "infoDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "infoCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "info": {
+          "type": "string"
+        },
+        "infoValue": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankDumpCustAddInfoGroup": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "infoGroup": {
+          "type": "string",
+          "format": "int64"
+        },
+        "groupTitle": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "remarks": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "reqOnEntry": {
+          "$ref": "#/definitions/simplebankNullBool"
+        },
+        "reqOnExit": {
+          "$ref": "#/definitions/simplebankNullBool"
+        },
+        "link2Loan": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "link2Save": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        }
+      }
+    },
+    "simplebankDumpCustAddInfoGroupNeed": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "infoGroup": {
+          "type": "string",
+          "format": "int64"
+        },
+        "infoCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "infoProcess": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpCustAddInfoList": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "infoCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "infoOrder": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "infoType": {
+          "type": "string"
+        },
+        "infoLen": {
+          "type": "string",
+          "format": "int64"
+        },
+        "infoFormat": {
+          "type": "string"
+        },
+        "inputType": {
+          "type": "string",
+          "format": "int64"
+        },
+        "infoSource": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankDumpCustomer": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "centerCode": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "title": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "lName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "fName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "mName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "maidenFName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "maidenLName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "maidenMName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "sex": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "birthDate": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "birthPlace": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "civilStatus": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "custType": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "remarks": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "status": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "classification": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "depoType": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "subClassification": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "pledgeAmount": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "mutualAmount": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "pangarapAmount": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "katuparanAmount": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "insuranceAmount": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "accPledge": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "accMutual": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "accPang": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "accKatuparan": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "accInsurance": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "loanLimit": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "creditLimit": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "dateRecognized": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "dateResigned": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "dateEntry": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "goldenLifeDate": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "restricted": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "borrower": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "coMaker": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "guarantor": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "dOSRI": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "iDCode1": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "iDNum1": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "iDCode2": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "iDNum2": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "contact1": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "contact2": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "phone1": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "reffered1": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "reffered2": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "reffered3": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "education": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "validity1": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "validity2": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "businessType": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "accountNumber": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "iIID": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "religion": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        }
+      }
+    },
+    "simplebankDumpInActiveCID": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "inActive": {
+          "type": "boolean"
+        },
+        "dateStart": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dateEnd": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "deactivatedBy": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpJnlDetails": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "trn": {
+          "type": "string"
+        },
+        "series": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "debit": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "credit": {
+          "$ref": "#/definitions/simplebankDecimal"
+        }
+      }
+    },
+    "simplebankDumpJnlHeaders": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "trn": {
+          "type": "string"
+        },
+        "trnDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "particulars": {
+          "type": "string"
+        },
+        "userName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "code": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankDumpLedgerDetails": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "trnDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "balance": {
+          "$ref": "#/definitions/simplebankDecimal"
+        }
+      }
+    },
+    "simplebankDumpLnBeneficiary": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "bDay": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "educLvl": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "boolean"
+        },
+        "lastName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "firstName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "middleName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "remarks": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpLnChrgData": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "chrgCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refAcc": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "chrAmnt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        }
+      }
+    },
+    "simplebankDumpLnMaster": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "acctType": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "disbDate": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "principal": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "interest": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "netProceed": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "gives": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "frequency": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "annumDiv": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "prin": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "intR": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "waivedInt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "weeksPaid": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "doMaturity": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "conIntRate": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "status": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "cycle": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "lNGrpCode": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "proff": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "fundSource": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "dOSRI": {
+          "$ref": "#/definitions/simplebankNullBool"
+        },
+        "lnCategory": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "openDate": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "lastTrnDate": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "disbBy": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpLoanInst": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "dnum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "dueDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "instFlag": {
+          "type": "string",
+          "format": "int64"
+        },
+        "duePrin": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "dueInt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "upInt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        }
+      }
+    },
+    "simplebankDumpModifiedTable": {
+      "type": "object",
+      "properties": {
+        "brCode": {
+          "type": "string"
+        },
+        "tableName": {
+          "type": "string"
+        },
+        "lastModCtr": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankDumpMultiplePaymentReceipt": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "trnDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "orNo": {
+          "type": "string",
+          "format": "int64"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "prNo": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "termId": {
+          "type": "string"
+        },
+        "amtPaid": {
+          "$ref": "#/definitions/simplebankDecimal"
+        }
+      }
+    },
+    "simplebankDumpMutualFund": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orNo": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "trnDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "trnType": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "trnAmt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "userName": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpReactivateWriteoff": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "iD": {
+          "type": "string",
+          "format": "int64"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "deactivateBy": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "reactivateBy": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "statusDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "simplebankDumpReferencesDetails": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "iD": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "purposeDescription": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "parentID": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "codeID": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "stat": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        }
+      }
+    },
+    "simplebankDumpSaMaster": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "cID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "type": {
+          "type": "string",
+          "format": "int64"
+        },
+        "balance": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "doLastTrn": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "doStatus": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "dopen": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "doMaturity": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "status": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpSaTrnMaster": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "trnDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "trn": {
+          "type": "string",
+          "format": "int64"
+        },
+        "trnType": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "orNo": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "trnAmt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "refNo": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "particular": {
+          "type": "string"
+        },
+        "termId": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "pendApprove": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankDumpTrnMaster": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "trnDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "trn": {
+          "type": "string",
+          "format": "int64"
+        },
+        "trnType": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "orNo": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "prin": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "intR": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "waivedInt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "refNo": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "userName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "particular": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpUnit": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "unitCode": {
+          "type": "string",
+          "format": "int64"
+        },
+        "unit": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "areaCode": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "fName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "lName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "mName": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "vatReg": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "unitAddress": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankDumpUsersList": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "accessCode": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "lName": {
+          "type": "string"
+        },
+        "fName": {
+          "type": "string"
+        },
+        "mName": {
+          "type": "string"
+        },
+        "dateHired": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "birthDay": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "dateGiven": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "dateExpired": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "address": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "position": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "areaCode": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "manCode": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "addInfo": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "passwd": {
+          "type": "string",
+          "format": "byte"
+        },
+        "attempt": {
+          "$ref": "#/definitions/simplebankNullInt64"
+        },
+        "dateLocked": {
+          "$ref": "#/definitions/simplebankNullTime"
+        },
+        "remarks": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "picture": {
+          "type": "string",
+          "format": "byte"
+        },
+        "isLoggedIn": {
+          "type": "boolean"
+        },
+        "accountExpirationDt": {
+          "$ref": "#/definitions/simplebankNullTime"
+        }
+      }
+    },
+    "simplebankDumpWriteoff": {
+      "type": "object",
+      "properties": {
+        "modCtr": {
+          "type": "string",
+          "format": "int64"
+        },
+        "brCode": {
+          "type": "string"
+        },
+        "modAction": {
+          "type": "string"
+        },
+        "acc": {
+          "type": "string"
+        },
+        "disbDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "principal": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "interest": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "balPrin": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "balInt": {
+          "$ref": "#/definitions/simplebankDecimal"
+        },
+        "trnDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "acctType": {
+          "type": "string"
+        },
+        "print": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "postedBy": {
+          "$ref": "#/definitions/simplebankNullString"
+        },
+        "verifiedBy": {
+          "$ref": "#/definitions/simplebankNullString"
+        }
+      }
+    },
+    "simplebankGetDumpBranchListRequest": {
+      "type": "object",
+      "properties": {
+        "brCode": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankGetModifiedTableRequest": {
+      "type": "object",
+      "properties": {
+        "brCode": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebankNullBool": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "boolean"
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "simplebankNullInt64": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "format": "int64"
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "simplebankNullString": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "simplebankNullTime": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "simplebankUpdateDumpBranchListRequest": {
+      "type": "object",
+      "properties": {
+        "brCode": {
+          "type": "string"
+        },
+        "ebSysDate": {
+          "type": "string",
+          "format": "int64"
+        },
+        "runState": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "simplebankUpdateDumpBranchListResponse": {
+      "type": "object",
+      "properties": {
+        "brCode": {
+          "type": "string"
+        }
+      }
+    },
+    "simplebanknoParam": {
+      "type": "object"
+    }
+  }
+}

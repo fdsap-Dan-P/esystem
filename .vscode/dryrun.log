@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/fdsap-rrpolintang/Documents/MyPrograms/Go_Programs/simplebank'
+echo postgresql://esystem_user:nghjKO0hr\$237!.C@34.143.228.170:5432/Customer001?sslmode=disable
+make: Leaving directory `/Users/fdsap-rrpolintang/Documents/MyPrograms/Go_Programs/simplebank'
+ 

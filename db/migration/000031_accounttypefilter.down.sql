@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Account_Type_Filter cascade;

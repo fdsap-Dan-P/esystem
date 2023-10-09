@@ -1,0 +1,513 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message noParam {} 
+
+message DumpBranchList {
+    string brCode = 1;
+    google.protobuf.Timestamp ebSysDate = 2;
+    int64 runState = 3;
+    string orgAddress = 4;
+    string taxInfo = 5;
+    string defCity = 6;
+    string defProvince = 7;
+    string defCountry = 8;
+    string defZip = 9;
+    bool waivableInt = 10;
+    string dBVersion = 11;
+    bytes eSystemVer = 12;
+    int64 newBrCode = 13;
+    google.protobuf.Timestamp  lastConnection = 14;
+}
+
+message DumpModifiedTable {
+    string brCode = 1;
+    string tableName = 2;
+    int64 lastModCtr = 3;
+} 
+
+message DumpArea {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 areaCode = 4;
+    NullString area = 5;
+} 
+
+message DumpUnit {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 unitCode = 4;
+    NullString unit = 5;
+    NullInt64 areaCode = 6;
+    NullString fName = 7;
+    NullString lName = 8;
+    NullString mName = 9;
+    NullString vatReg = 10;
+    NullString unitAddress = 11;
+} 
+
+message DumpCenter {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string centerCode = 4;
+    NullString centerName = 5;
+    NullString centerAddress = 6;
+    NullInt64 meetingDay = 7;
+    NullInt64 unit = 8;
+    NullTime dateEstablished = 9;
+    NullInt64 aOID = 10;
+    } 
+
+message DumpCustomer {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 cID = 4;
+    NullString centerCode = 5;
+    NullInt64 title = 6;
+    NullString lName = 7;
+    NullString fName = 8;
+    NullString mName = 9;
+    NullString maidenFName = 10;
+    NullString maidenLName = 11;
+    NullString maidenMName = 12;
+    NullString sex = 13;
+    NullTime birthDate = 14;
+    NullString birthPlace = 15;
+    NullInt64 civilStatus = 16;
+    NullInt64 custType = 17;
+    NullString remarks = 18;
+    NullInt64 status = 19;
+    NullInt64 classification = 20;
+    NullString depoType = 21;
+    NullInt64 subClassification = 22;
+    Decimal pledgeAmount = 23;
+    Decimal mutualAmount = 24;
+    Decimal pangarapAmount = 25;
+    Decimal katuparanAmount = 26;
+    Decimal insuranceAmount = 27;
+    Decimal accPledge = 28;
+    Decimal accMutual = 29;
+    Decimal accPang = 30;
+    Decimal accKatuparan = 31;
+    Decimal accInsurance = 32;
+    Decimal loanLimit = 33;
+    Decimal creditLimit = 34;
+    NullTime dateRecognized = 35;
+    NullTime dateResigned = 36;
+    NullTime dateEntry = 37;
+    NullTime goldenLifeDate = 38;
+    NullString restricted = 39;
+    NullString borrower = 40;
+    NullString coMaker = 41;
+    NullString guarantor = 42;
+    NullInt64 dOSRI = 43;
+    NullInt64 iDCode1 = 44;
+    NullString iDNum1 = 45;
+    NullInt64 iDCode2 = 46;
+    NullString iDNum2 = 47;
+    NullString contact1 = 48;
+    NullString contact2 = 49;
+    NullString phone1 = 50;
+    NullString reffered1 = 51;
+    NullString reffered2 = 52;
+    NullString reffered3 = 53;
+    NullInt64 education = 54;
+    NullTime validity1 = 55;
+    NullTime validity2 = 56;
+    NullInt64 businessType = 57;
+    NullString accountNumber = 58;
+    NullInt64 iIID = 59;
+    NullInt64 religion = 60;
+} 
+
+message DumpAddresses {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 cID = 4;
+    int64 seqNum = 5;
+    NullString addressDetails = 6;
+    NullString barangay = 7;
+    NullString city = 8;
+    NullString province = 9;
+    NullString phone1 = 10;
+    NullString phone2 = 11;
+    NullString phone3 = 12;
+    NullString phone4 = 13;
+    } 
+
+message DumpLnMaster {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 cID = 4;
+    string acc = 5;
+    NullInt64 acctType = 6;
+    NullTime disbDate = 7;
+    Decimal principal = 8;
+    Decimal interest = 9;
+    Decimal netProceed = 10;
+    NullInt64 gives = 11;
+    NullInt64 frequency = 12;
+    NullInt64 annumDiv = 13;
+    Decimal prin = 14;
+    Decimal intR = 15;
+    Decimal waivedInt = 16;
+    NullInt64 weeksPaid = 17;
+    NullTime doMaturity = 18;
+    Decimal conIntRate = 19;
+    NullString status = 20;
+    NullInt64 cycle = 21;
+    NullInt64 lNGrpCode = 22;
+    NullInt64 proff = 23;
+    NullString fundSource = 24;
+    NullBool dOSRI = 25;
+    NullInt64 lnCategory = 26;
+    NullTime openDate = 27;
+    NullTime lastTrnDate = 28;
+    NullString disbBy = 29;
+} 
+
+message DumpSaMaster {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string acc = 4;
+    int64 cID = 5;
+    int64 type = 6;
+    Decimal balance = 7;
+    NullTime doLastTrn = 8;
+    NullTime doStatus = 9;
+    NullTime dopen = 10;
+    NullTime doMaturity = 11;
+    NullString status = 12;
+    } 
+    message DumpTrnMaster {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string acc = 4;
+    google.protobuf.Timestamp trnDate = 5;
+    int64 trn = 6;
+    NullInt64 trnType = 7;
+    NullInt64 orNo = 8;
+    Decimal prin = 9;
+    Decimal intR = 10;
+    Decimal waivedInt = 11;
+    NullString refNo = 12;
+    NullString userName = 13;
+    NullString particular = 14;
+} 
+
+message DumpSaTrnMaster {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string acc = 4;
+    google.protobuf.Timestamp trnDate = 5;
+    int64 trn = 6;
+    NullInt64 trnType = 7;
+    NullInt64 orNo = 8;
+    Decimal trnAmt = 9;
+    NullString refNo = 10;
+    string particular = 11;
+    string termId = 12;
+    string userName = 13;
+    string pendApprove = 14;
+} 
+
+message DumpLoanInst {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string acc = 4;
+    int64 dnum = 5;
+    google.protobuf.Timestamp dueDate = 6;
+    int64 instFlag = 7;
+    Decimal duePrin = 8;
+    Decimal dueInt = 9;
+    Decimal upInt = 10;
+} 
+
+message DumpLnChrgData {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string acc = 4;
+    int64 chrgCode = 5;
+    NullString refAcc = 6;
+    Decimal chrAmnt = 7;
+} 
+
+message DumpCustAddInfoList {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 infoCode = 4;
+    string infoOrder = 5;
+    string title = 6;
+    string infoType = 7;
+    int64 infoLen = 8;
+    string infoFormat = 9;
+    int64 inputType = 10;
+    string infoSource = 11;
+} 
+
+message DumpCustAddInfoGroup {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 infoGroup = 4;
+    NullString groupTitle = 5;
+    NullString remarks = 6;
+    NullBool reqOnEntry = 7;
+    NullBool reqOnExit = 8;
+    NullInt64 link2Loan = 9;
+    NullInt64 link2Save = 10;
+} 
+
+message DumpCustAddInfoGroupNeed {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 infoGroup = 4;
+    int64 infoCode = 5;
+    NullString infoProcess = 6;
+} 
+
+message DumpCustAddInfo {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 cID = 4;
+    google.protobuf.Timestamp infoDate = 5;
+    int64 infoCode = 6;
+    string info = 7;
+    int64 infoValue = 8;
+} 
+
+message DumpMutualFund {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 cID = 4;
+    NullInt64 orNo = 5;
+    google.protobuf.Timestamp trnDate = 6;
+    NullString trnType = 7;
+    Decimal trnAmt = 8;
+    NullString userName = 9;
+} 
+
+message DumpReferencesDetails {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 iD = 4;
+    int64 refID = 5;
+    NullString purposeDescription = 6;
+    NullInt64 parentID = 7;
+    NullInt64 codeID = 8;
+    NullInt64 stat = 9;
+} 
+    
+message DumpCenterWorker {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    int64 aOID = 4;
+    NullString lname = 5;
+    NullString fName = 6;
+    NullString mname = 7;
+    NullString phoneNumber = 8;
+} 
+
+message DumpWriteoff {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string acc = 4;
+    google.protobuf.Timestamp disbDate = 5;
+    Decimal principal = 6;
+    Decimal interest = 7;
+    Decimal balPrin = 8;
+    Decimal balInt = 9;
+    google.protobuf.Timestamp trnDate = 10;
+    string acctType = 11;
+    NullString print = 12;
+    NullString postedBy = 13;
+    NullString verifiedBy = 14;
+} 
+
+message DumpAccounts {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string acc = 4;
+    string title = 5;
+    int64 category = 6;
+    string type = 7;
+    NullString mainCD = 8;
+    NullString parent = 9;
+} 
+
+    message DumpJnlHeaders {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string trn = 4;
+    google.protobuf.Timestamp trnDate = 5;
+    string particulars = 6;
+    NullString userName = 7;
+    int64 code = 8;
+} 
+
+message DumpJnlDetails {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string acc = 4;
+    string trn = 5;
+    NullInt64 series = 6;
+    Decimal debit = 7;
+    Decimal credit = 8;
+} 
+
+message DumpLedgerDetails {
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    google.protobuf.Timestamp trnDate = 4;
+    string acc = 5;
+    Decimal balance = 6;
+}
+
+message DumpUsersList { 
+
+    int64 modCtr = 1;
+    string brCode = 2;
+    string modAction = 3;
+    string userId = 4;
+    NullInt64 accessCode = 5;
+    string lName = 6;
+    string fName = 7;
+    string mName = 8;
+    NullTime dateHired = 9;
+    NullTime birthDay = 10;
+    NullTime dateGiven = 11;
+    NullTime dateExpired = 12;
+    NullString address = 13;
+    NullString position = 14;
+    NullInt64 areaCode = 15;
+    NullInt64 manCode = 16;
+    NullString addInfo = 17;
+    bytes passwd = 18;
+    NullInt64 attempt = 19;
+    NullTime dateLocked = 20;
+    NullString remarks = 21;
+    bytes picture = 22;
+    bool isLoggedIn = 23;
+    NullTime accountExpirationDt = 24;
+}
+
+message DumpMultiplePaymentReceipt { 
+
+    int64 modCtr = 1;
+    string brCode = 2;
+    google.protobuf.Timestamp  trnDate = 3;
+    int64 orNo = 4;
+    int64 cID = 5;
+    int64 prNo = 6;
+    string userName = 7;
+    string termId = 8;
+    Decimal amtPaid = 9;
+}
+
+message DumpInActiveCID { 
+    int64 modCtr = 1;
+    string brCode = 2;
+    int64 cID = 3;
+    bool inActive = 4;
+    google.protobuf.Timestamp dateStart = 5;
+    NullTime dateEnd = 6;
+    string userId = 7;
+    NullString deactivatedBy = 8;
+}
+
+message DumpLnBeneficiary { 
+    int64 modCtr = 1;
+    string brCode = 2;
+    string acc = 3;
+    google.protobuf.Timestamp bDay = 4;
+    string educLvl = 5;
+    bool gender = 6;
+    NullString lastName = 7;
+    NullString firstName = 8;
+    NullString middleName = 9;
+    NullString remarks = 10;
+}
+message DumpReactivateWriteoff { 
+    int64 modCtr = 1;
+    string brCode = 2;
+    int64 iD = 3;
+    int64 cID = 4;
+    NullString deactivateBy = 5;
+    NullString reactivateBy = 6;
+    int64 status = 7;
+    google.protobuf.Timestamp statusDate = 8;
+}
+
+message DumpColSht { 
+    string brCode = 1;
+    int64 appType = 2;
+    int64 code = 3;
+    int64 status = 4;
+    string acc = 5;
+    int64 cID = 6;
+    string uM = 7;
+    string clientName = 8;
+    string centerCode = 9;
+    string centerName = 10;
+    int64 manCode = 11;
+    string unit = 12;
+    int64 areaCode = 13;
+    string area = 14;
+    string staffName = 15;
+    int64 acctType = 16;
+    string acctDesc = 17;
+    google.protobuf.Timestamp disbDate = 18;
+    google.protobuf.Timestamp dateStart = 19;
+    google.protobuf.Timestamp maturity = 20;
+    Decimal principal = 21;
+    Decimal interest = 22;
+    int64 gives = 23;
+    Decimal balPrin = 24;
+    Decimal balInt = 25;
+    Decimal amort = 26;
+    Decimal duePrin = 27;
+    Decimal dueInt = 28;
+    Decimal loanBal = 29;
+    Decimal saveBal = 30;
+    Decimal waivedInt = 31;
+    int64 unPaidCtr = 32;
+    int64 WrittenOff = 33;
+    string orgName = 34;
+    string orgAddress = 35;
+    google.protobuf.Timestamp meetingDate = 36;
+    int64 meetingDay = 37;
+    Decimal sharesOfStock = 38;
+    google.protobuf.Timestamp dateEstablished = 39;
+    int64 classification = 40;
+    int64 writeOff = 41;
+}

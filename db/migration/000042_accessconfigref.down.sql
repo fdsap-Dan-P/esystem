@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Access_Config_Ref cascade;

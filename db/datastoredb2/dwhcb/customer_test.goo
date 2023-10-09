@@ -1,0 +1,24 @@
+package dwhcb
+
+import (
+	"context"
+	"log"
+
+	// "log"
+	"testing"
+
+	"github.com/stretchr/testify/require"
+)
+
+func TestCustomer(t *testing.T) {
+
+	var cid int64 = 1012099899
+	getData2, err2 := testQueriesCustomer.GetCustomerInfo(context.Background(), cid)
+	require.NoError(t, err2)
+	require.NotEmpty(t, getData2)
+	log.Printf("getData2 %+v", getData2)
+	// require.Equal(t, d2.Title, getData2.Title)
+	// require.Equal(t, d2.ShortName, getData2.ShortName)
+	require.True(t, false)
+
+}

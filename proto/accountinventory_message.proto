@@ -1,0 +1,119 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+import "reference_message.proto";
+// import "document_message.proto";
+import "identity_message.proto";
+
+message AccountInventory {
+  int64 id = 1;
+  string uuid = 2;
+  int64 accountId = 3;
+  string barCode = 4;
+  string code = 5;
+  string inventory = 6;
+  string unitPrice = 7;
+  string bookValue = 8;
+  string discount = 9;
+  string taxRate = 10;
+  string remarks = 11;
+  NullString otherInfo = 12;
+}
+
+message InventoryItem {
+  int64 id = 1;
+  string uuid = 2;
+  string barCode = 3;
+  string itemName = 4;
+  string uniqueVariation = 5;
+  int64 parentId = 6;
+  NullInt64 genericNameId = 7;
+  NullInt64 brandNameId = 8;
+  int64 measureId = 9;
+  NullInt64 imageId = 10;
+  string remarks = 11;
+  NullString otherInfo = 12;
+}
+
+// message InventoryItemFull {
+//   int64 id = 1;
+//   string uuid = 2;
+//   string barCode = 3;
+//   string itemName = 4;
+//   string uniqueVariation = 5;
+//   repeated InventoryItem parent = 6;
+//   Reference genericName = 7;
+//   Reference brandName = 8;
+//   Reference measure = 9;
+//   Document imageId = 10;
+//   string remarks = 11;
+//   NullString otherInfo = 12;
+//   int64 pathLevel = 13;
+//   string pathInfo = 14;
+//   // repeated InventorySpecsString inventorySpecsString = 15;
+//   // repeated InventorySpecsNumber inventorySpecsNumber = 16;
+//   // repeated InventorySpecsDate inventorySpecsDate = 17;
+// }
+
+message InventoryDetail {
+  int64 id = 1;
+  string uuid = 2;
+  int64 accountInventoryId = 3;
+  int64 inventoryItemId = 4;
+  NullInt64 supplierId = 5;
+  string unitPrice = 6;
+  string bookValue = 7;
+  string unit = 8;
+  int64 measureId = 9;
+  NullTime dateManufactured = 10;
+  NullTime dateExpired = 11;
+  string remarks = 12;
+  NullString otherInfo = 13;
+}
+
+message InventoryDetailFull {
+  int64 id = 1;
+  string uuid = 2;
+  AccountInventory accountInventory = 3;
+  InventoryItem inventoryItem = 4;
+  IdentityInfo supplier = 5;
+  string unitPrice = 6;
+  string bookValue = 7;
+  string unit = 8;
+  Reference measure = 9;
+  NullTime dateManufactured = 10;
+  NullTime dateExpired = 11;
+  string remarks = 12;
+  NullString otherInfo = 13;
+}
+
+message InventorySpecsString {
+  string uuid = 1;
+  int64 inventoryItemId = 2;
+  int64 specsId = 3;
+  string value = 4;
+}
+
+message InventorySpecsNumber {
+  string uuid = 1;
+  int64 inventoryItemId = 2;
+  int64 specsId = 3;
+  string value = 4;
+  string value2 = 5;
+  int64 measureId = 6;
+}
+
+message InventorySpecsDate {
+  string uuid = 1;
+  int64 inventoryItemId = 2;
+  int64 specsId = 3;
+  google.protobuf.Timestamp value = 4;
+  google.protobuf.Timestamp value2 = 5;
+}

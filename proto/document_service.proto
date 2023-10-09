@@ -1,0 +1,105 @@
+syntax = "proto3";
+package simplebank;
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "google/api/annotations.proto";
+import "document_message.proto";
+import "type_message.proto";
+
+  message UploadFileRequest {
+    oneof data {
+      FileInfo info = 1;
+      bytes chunkData = 2;
+    };
+  }
+  
+  message FileInfo {
+    string fileType = 1;
+    string fileName = 2;
+    string referenceCode = 3;
+    string remarks = 4;
+    string targetTable = 5;
+    string serverPath = 6;
+    string dockerImgID = 7;
+    string dockerPath = 8;
+  }
+  
+  message UploadFileResponse {
+    string checkSum = 1;
+  }
+  
+  service DocumentService {
+    rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse) {
+      option (google.api.http) = {
+        post : "/v1/document/upload_file"
+        body : "*"
+      };
+    };
+
+    rpc LoadUploadFile(stream UploadFileRequest) returns (UploadFileResponse) {
+      option (google.api.http) = {
+        post : "/v1/document/upload_file"
+        body : "*"
+      };
+    };
+
+    rpc CreateDocument(Document) returns (CreateResponseId) {
+      option (google.api.http) = {
+        post : "/v1/Document/Create"
+        body : "*"
+      };
+    };
+
+    rpc UpdateDocument(Document) returns (Document) {
+      option (google.api.http) = {
+        post : "/v1/Document/Update"
+        body : "*"
+      };
+    };
+
+    rpc GetDocumentById(GetbyIdRequest) returns (Document) {
+      option (google.api.http) = {
+        post : "/v1/Document/GetbyId"
+        body : "*"
+      };
+    };
+
+    rpc GetDocumentbyUUID(GetbyUuidRequest) returns (Document) {
+      option (google.api.http) = {
+        post : "/v1/Document/GetbyUuid"
+        body : "*"
+      };
+    };
+
+    rpc CreateDocumentUser(DocumentUser) returns (CreateResponseId) {
+      option (google.api.http) = {
+        post : "/v1/DocumentUser/Create"
+        body : "*"
+      };
+    };
+
+    rpc UpdateDocumentUser(DocumentUser) returns (DocumentUser) {
+      option (google.api.http) = {
+        post : "/v1/DocumentUser/Update"
+        body : "*"
+      };
+    };
+
+    rpc GetDocumentUserById(GetbyIdRequest) returns (DocumentUser) {
+      option (google.api.http) = {
+        post : "/v1/DocumentUser/GetbyId"
+        body : "*"
+      };
+    };
+
+    rpc GetDocumentUserbyUUID(GetbyUuidRequest) returns (DocumentUser) {
+      option (google.api.http) = {
+        post : "/v1/DocumentUser/GetbyUuid"
+        body : "*"
+      };
+    };
+}
+  

@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Ticket_Item_Specs_Number cascade;

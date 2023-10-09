@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS User_Account_Type cascade;

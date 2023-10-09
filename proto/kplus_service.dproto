@@ -1,0 +1,91 @@
+// syntax = "proto3";
+
+// package simplebank;
+
+// option go_package = "/pb";
+// option java_package = "com.fdsap.simplebank.pb";
+// option java_multiple_files = true;
+
+// import "kplus_message.proto";
+// import "google/api/annotations.proto";
+
+// service KPlusService {
+
+//   rpc SearchCustomerCID(KPLUSCustomerRequest) returns (KPLUSCustomerResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/SearchCustomerCID"
+//       body : "*"
+//     };
+//   };
+
+//   rpc CustSavingsList(KPLUSCustomerRequest) returns (KPLUSCustSavingsListResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/custSavingsList"
+//       body : "*"
+//     };
+//   };
+
+//   rpc GetTransactionHistory(KPLUSGetTransactionHistoryRequest) returns (KPLUSGetTransactionHistoryResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/getTransactionHistory"
+//       body : "*"
+//     };
+//   };
+  
+//   rpc GenerateColShtperCID(KPLUSCustomerRequest) returns (KPLUSGenerateColShtperCIDResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/generateColShtperCID"
+//       body : "*"
+//     };
+//   };
+
+//   rpc K2CCallBackRef(KPLUSCallBackRefRequest) returns (KPLUSResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/k2cCallBackRef"
+//       body : "*"
+//     };
+//   };
+
+//   rpc GetReferences(KPLUSGetReferencesRequest) returns (KPLUSGetReferencesResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/getReferences"
+//       body : "*"
+//     };
+//   };
+
+//   rpc MultiplePayment(KPLUSMultiplePaymentRequest) returns (KPLUSResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/multiplePayment"
+//       body : "*"
+//     };
+//   };
+
+//   rpc SearchLoanList(KPLUSCustomerRequest) returns (KPLUSSearchLoanListResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/searchLoanList"
+//       body : "*"
+//     };
+//   };
+
+//   rpc LoanInfo(KPLUSAccRequest) returns (KPLUSLoanInfoResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/LoanInfo"
+//       body : "*"
+//     };
+//   };
+
+//   rpc GetSavingForSuperApp(KPLUSCustomerRequest) returns (KPLUSGetSavingResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/getSavingForSuperApp"
+//       body : "*"
+//     };
+//   };
+
+//   rpc FundTransferRequest(KPLUSFundTransferRequest) returns (KPLUSResponse) {
+//     option (google.api.http) = {
+//       post : "/kplus/v1/FundTransfer"
+//       body : "*"
+//     };
+//   };
+
+// }

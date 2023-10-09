@@ -1,0 +1,218 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message Account {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 customerId = 3;
+  string acc = 4;
+  string alternateAcc = 5;
+  string accountName = 6;
+  string balance = 7;
+  string nonCurrent = 8;
+  google.protobuf.Timestamp contractDate = 9;
+  string credit = 10;
+  string debit = 11;
+  bool isbudget = 12;
+  google.protobuf.Timestamp lastActivityDate = 13;
+  google.protobuf.Timestamp openDate = 14;
+  int32 passbookLine = 15;
+  string pendingTrnAmt = 16;
+  string principal = 17;
+  int64 classId = 18;
+  int64 typeId = 19;
+  int64 budgetAccountId = 20;
+  string currency = 21;
+  int64 officeId = 22;
+  int64 referredbyId = 23;
+  int64 statusId = 24;
+  string remarks = 25;
+  NullString otherInfo = 26;
+}
+
+message AccountBeneficiary {
+  string uuid = 1;
+  int64 accountId = 2;
+  int32 series = 3;
+  int64 typeId = 4;
+  int64 iiid = 5;
+  int64 relationTypeId = 6;
+  NullString otherInfo = 7;
+}
+
+message AccountClass {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 productId = 3;
+  int64 groupId = 4;
+  int64 classId = 5;
+  int64 curId = 6;
+  int64 noncurId = 7;
+  int64 bsAccId = 8;
+  int64 isAccId = 9;
+  NullString otherInfo = 10;
+}
+
+message AccountInterest {
+  int64 accountId = 1;
+  string uuid = 2;
+  string interest = 3;
+  double effectiveRate = 4;
+  double interestRate = 5;
+  string credit = 6;
+  string debit = 7;
+  string accruals = 8;
+  string waivedInt = 9;
+  google.protobuf.Timestamp lastAccruedDate = 10;
+}
+
+message AccountParam {
+  string uuid = 1;
+  int64 paramItemId = 2;
+  int64 typeId = 3;
+  google.protobuf.Timestamp dateImplemented = 4;
+  int64 valueInt = 5;
+  string valueDecimal = 6;
+  google.protobuf.Timestamp valueDate = 7;
+  string valueString = 8;
+  NullString otherInfo = 9;
+}
+
+message AccountQuantity {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 accountId = 3;
+  int64 packageId = 4;
+  string itemName = 5;
+  int64 genericNameId = 6;
+  int64 brandNameId = 7;
+  int64 supplierId = 8;
+  string quantity = 9;
+  string unitPrice = 10;
+  string bookValue = 11;
+  string unit = 12;
+  int64 measureId = 13;
+  string discount = 14;
+  string taxRate = 15;
+  string remarks = 16;
+  NullString otherInfo = 17;
+}
+
+message AccountTerm {
+  int64 accountId = 1;
+  string uuid = 2;
+  int32 frequency = 3;
+  int32 n = 4;
+  int32 paidN = 5;
+  string fixedDue = 6;
+  string cummulativeDue = 7;
+  google.protobuf.Timestamp dateStart = 8;
+  google.protobuf.Timestamp maturity = 9;
+}
+
+message AccountType {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 code = 3;
+  string accountType = 4;
+  int64 productId = 5;
+  int64 groupId = 6;
+  int64 iiid = 7;
+  bool normalBalance = 8;
+  bool isgl = 9;
+  bool active = 10;
+  NullString otherInfo = 11;
+}
+
+message ChargeType {
+  int64 iD = 1;
+  string uuid = 2;
+  string chargeType = 3;
+  int64 unrealizedId = 4;
+  int64 realizedId = 5;
+  NullString otherInfo = 6;
+}
+
+message GlAccount {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 officeId = 3;
+  int64 coaId = 4;
+  string balance = 5;
+  string pendingTrnAmt = 6;
+  int64 typeId = 7;
+  string currency = 8;
+  int64 partitionId = 9;
+  string remark = 10;
+  NullString otherInfo = 11;
+}
+
+message OfficeAccount {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 officeId = 3;
+  int64 typeId = 4;
+  string currency = 5;
+  int64 partitionId = 6;
+  string balance = 7;
+  string pendingTrnAmt = 8;
+  string budget = 9;
+  google.protobuf.Timestamp lastActivityDate = 10;
+  int64 statusId = 11;
+  string remarks = 12;
+  NullString otherInfo = 13;
+}
+
+message OfficeAccountType {
+  int64 iD = 1;
+  string uuid = 2;
+  string officeAccountType = 3;
+  int64 coaId = 4;
+  NullString otherInfo = 5;
+}
+
+message OtherSchedule {
+  string uuid = 1;
+  int64 accountId = 2;
+  int64 chargeId = 3;
+  int32 series = 4;
+  google.protobuf.Timestamp dueDate = 5;
+  string dueAmt = 6;
+  string realizable = 7;
+  string endbal = 8;
+  NullString otherInfo = 9;
+}
+
+message Product {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 code = 3;
+  string productName = 4;
+  string description = 5;
+  bool normalBalance = 6;
+  bool isgl = 7;
+  NullString otherInfo = 8;
+}
+
+message Schedule {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 accountId = 3;
+  int32 series = 4;
+  google.protobuf.Timestamp dueDate = 5;
+  string duePrin = 6;
+  string dueInt = 7;
+  string endPrin = 8;
+  string endInt = 9;
+  string carryingValue = 10;
+  string realizable = 11;
+  NullString otherInfo = 12;
+}

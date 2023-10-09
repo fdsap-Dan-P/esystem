@@ -1,0 +1,149 @@
+syntax = "proto3";
+
+package simplebank;
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "google/protobuf/timestamp.proto";
+import "type_message.proto";
+import "reference_message.proto";
+import "accountinventory_message.proto";
+import "document_message.proto";
+import "google/api/annotations.proto";
+
+message InventoryItemChildRequest {
+  int64 id = 1;
+  string uuid = 2;
+  string barCode = 3;
+  string itemName = 4;
+  string uniqueVariation = 5;
+  int64 parentId = 6;
+  NullInt64 genericNameId = 7;
+  NullInt64 brandNameId = 8;
+  int64 measureId = 9;
+  NullInt64 imageId = 10;
+  string remarks = 11;
+  NullString otherInfo = 12;
+  repeated InventorySpecsString inventorySpecsString = 13;
+  repeated InventorySpecsNumber inventorySpecsNumber = 14;
+  repeated InventorySpecsDate inventorySpecsDate = 15;
+  repeated InventoryItemChildRequest child = 16;
+}
+
+message InventoryItemRequest {
+  InventoryItem inventoryItem = 1;
+  repeated InventoryItemChildRequest child = 2;
+  repeated InventorySpecsString inventorySpecsString = 3;
+  repeated InventorySpecsNumber inventorySpecsNumber = 4;
+  repeated InventorySpecsDate inventorySpecsDate = 5;
+}
+
+message InventoryItemResponse {
+  InventoryItem inventoryItem = 1;
+  Reference genericName = 2;
+  Reference brandName = 3;
+  Reference measure = 4;
+  Document image = 5;
+  repeated InventorySpecsString inventorySpecsString = 6;
+  repeated InventorySpecsNumber inventorySpecsNumber = 7;
+  repeated InventorySpecsDate inventorySpecsDate = 8;
+  repeated InventoryItemResponse child = 9;
+}
+
+message GetInventoryItemRequest { 
+int64 id = 1; }
+
+message SearchInventoryItemRequest {
+  message ItemIdString {
+    int64 inventoryItemId = 1;
+    string value = 2;
+  }
+  message ItemIdDate {
+    int64 inventoryItemId = 1;
+    google.protobuf.Timestamp value = 2;
+    google.protobuf.Timestamp value2 = 3;
+  }
+  message ItemIdNumber {
+    int64 inventoryItemId = 1;
+    string value = 2;
+    string value2 = 3;
+  }
+
+  repeated ItemIdString itemIdString = 1;
+  repeated ItemIdDate itemIdDate = 2;
+  repeated ItemIdNumber itemIdNumber = 3;
+}
+
+message GetInventoryItemRequestbyUuid { 
+string uuid = 1; }
+
+message GetListInventoryItemRequestbyGeneric {
+  int64 genericId = 1;
+  int32 Limit = 2;
+  int32 Offset = 3;
+}
+
+message GetListInventoryItemRequestbyBrand {
+  int64 brandId = 1;
+  int32 Limit = 2;
+  int32 Offset = 3;
+}
+
+message GetListInventoryItemResponse {
+  repeated InventoryItemResponse inventoryItemResponse = 1;
+}
+
+service InventoryItemService {
+  rpc CreateInventoryItem(InventoryItemRequest)
+      returns (stream InventoryItemResponse) {
+    option (google.api.http) = {
+      post : "/v1/inventoryItem/create"
+      body : "*"
+    };
+  };
+
+  rpc UpdateInventoryItem(InventoryItemRequest)
+      returns (stream InventoryItemResponse) {
+    option (google.api.http) = {
+      post : "/v1/inventoryItem/update"
+      body : "*"
+    };
+  };
+
+  rpc GetInventoryItem(GetInventoryItemRequest)
+      returns (stream InventoryItemResponse) {
+    option (google.api.http) = {
+      get : "/v1/inventoryItem/get"
+    };
+  };
+
+  rpc GetInventoryItembyUuid(GetInventoryItemRequestbyUuid)
+      returns (stream InventoryItemResponse) {
+    option (google.api.http) = {
+      get : "/v1/inventoryItem/get/uuid"
+    };
+  };
+
+  rpc GetListInventoryItembyGeneric(GetListInventoryItemRequestbyGeneric)
+      returns (stream GetListInventoryItemResponse) {
+    option (google.api.http) = {
+      get : "/v1/inventoryItem/get/generic"
+    };
+  };
+
+  rpc GetListInventoryItembyBrand(GetListInventoryItemRequestbyBrand)
+      returns (stream GetListInventoryItemResponse) {
+    option (google.api.http) = {
+      get : "/v1/inventoryItem/get/brand"
+    };
+  };
+
+  rpc SearchInventoryItem(SearchInventoryItemRequest)
+      returns (stream GetListInventoryItemResponse) {
+    option (google.api.http) = {
+      get : "/v1/inventoryItem/search"
+    };
+  };
+}

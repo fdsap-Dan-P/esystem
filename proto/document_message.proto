@@ -1,0 +1,42 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message Document {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 serverId = 3;
+  string filePath = 4;
+  google.protobuf.Timestamp docDate = 5;
+  repeated bytes thumbnail = 6;
+  int64 doctypeId = 7;
+  string description = 8;
+  NullString otherInfo = 9;
+}
+
+message Server {
+  int64 iD = 1;
+  string uuid = 2;
+  string code = 3;
+  int32 connectivity = 4;
+  string netAddress = 5;
+  string certificate = 6;
+  string homePath = 7;
+  string description = 8;
+  NullString otherInfo = 9;
+}
+
+message DocumentUser {
+  string uuid = 2;
+  string documentId = 3;
+  int32 userId = 4;
+  string accessCode = 5;
+  NullString otherInfo = 6;
+}

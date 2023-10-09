@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Inventory_Specs_String cascade;

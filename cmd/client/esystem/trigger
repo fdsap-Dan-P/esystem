@@ -1,0 +1,65 @@
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE TRIGGER for [MultiplePaymentReceipt] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_MultiplePaymentReceipt')
+BEGIN
+    DROP TRIGGER trgModCtr_MultiplePaymentReceipt
+END
+GO;
+
+CREATE TRIGGER trgModCtr_MultiplePaymentReceipt
+ON MultiplePaymentReceipt
+FOR INSERT, UPDATE 
+AS 
+  DECLARE @Operation as char(1) 
+  
+  SET @Operation = 'I' 
+  IF EXISTS(SELECT UserId FROM deleted)
+  SET @Operation = 'U' 
+  INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'MultiplePaymentReceipt' TableName, Inserted.OrNo UniqueKeyInt1, @Operation ModAction
+  FROM INSERTED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE TRIGGER for [MultiplePaymentReceipt] Table
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+-->>> BEGIN: CREATE DELETE TRIGGER for [MultiplePaymentReceipt] Table
+---------------------------------------------------------------------------
+IF EXISTS 
+ (SELECT 1 FROM sys.triggers 
+  WHERE Name = 'trgModCtr_MultiplePaymentReceipt_Del')
+BEGIN
+  DROP TRIGGER trgModCtr_MultiplePaymentReceipt_Del
+END
+GO;
+
+CREATE TRIGGER trgModCtr_MultiplePaymentReceipt_Del
+ON MultiplePaymentReceipt
+FOR DELETE 
+AS 
+INSERT Modified
+    (TableName, UniqueKeyInt1, ModAction)
+  SELECT
+    'MultiplePaymentReceipt' TableName, DELETED.OrNo UniqueKeyInt1, 'D' ModAction 
+  FROM DELETED
+GO
+---------------------------------------------------------------------------
+-->>> END: CREATE DELETE TRIGGER for [MultiplePaymentReceipt] Table
+---------------------------------------------------------------------------
+
+/*
+SELECT * FROM MultiplePaymentReceipt
+UPDATE MultiplePaymentReceipt set Ledgdet_Amount = Ledgdet_Amount WHERE LEDGDET_TRNDATE = '2014-08-06' and Ledgdet_Acct_Code = '1-11-211-1'
+
+SELECT  ModCtr, TableName, ModAction, UniqueKeyDate, UniqueKeyString1 
+FROM Modified m WHERE TableName = 'MultiplePaymentReceipt'
+
+*/
+

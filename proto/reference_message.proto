@@ -1,0 +1,106 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+// import "google/protobuf/timestamp.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message ChartofAccount {
+  int64 iD = 1;
+  string uuid = 2;
+  string acc = 3;
+  bool active = 4;
+  bool contraAccount = 5;
+  bool normalBalance = 6;
+  string title = 7;
+  int64 parentId = 8;
+  string shortName = 9;
+  NullString otherInfo = 10;
+}
+
+message UnitConversion {
+  int64 id = 1;
+  string uuid = 2;
+  int64 typeId = 3;
+  int64 fromId = 4;
+  int64 toId = 5;
+  string value = 6;
+  string otherInfo = 7;
+}
+
+message CoaParent {
+  int64 iD = 1;
+  string uuid = 2;
+  string acc = 3;
+  int64 coaSeq = 4;
+  string title = 5;
+  int64 parentId = 6;
+  NullString otherInfo = 7;
+}
+
+message Fxrate {
+  string uuid = 1;
+  string buyRate = 2;
+  google.protobuf.Timestamp cutofDate = 3;
+  string sellRate = 4;
+  string baseCurrency = 5;
+  string currency = 6;
+  NullString otherInfo = 7;
+}
+
+message Geography {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 code = 3;
+  string shortName = 4;
+  string location = 5;
+  int64 typeId = 6;
+  int64 parentId = 7;
+  string zipCode = 8;
+  double latitude = 9;
+  double longitude = 10;
+  string addressUrl = 11;
+  string simpleLocation = 12;
+  string fullLocation = 13;
+  NullString otherInfo = 14;
+}
+
+message MainRecord {
+  string uuid = 1;
+  int64 modCtr = 2;
+  google.protobuf.Timestamp created = 3;
+  google.protobuf.Timestamp updated = 4;
+}
+
+message Modified {
+  string uuid = 1;
+  int64 modCtr = 2;
+  google.protobuf.Timestamp updated = 3;
+}
+
+message Reference {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 code = 3;
+  string shortName = 4;
+  string statuscode = 5;
+  string title = 6;
+  int64 parentId = 7;
+  int64 typeId = 8;
+  string remark = 9;
+  NullString otherInfo = 10;
+}
+
+message ReferenceType {
+  int64 iD = 1;
+  string uuid = 2;
+  string code = 3;
+  string title = 4;
+  string description = 5;
+  NullString otherInfo = 6;
+}

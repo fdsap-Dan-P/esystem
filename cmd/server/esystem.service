@@ -1,0 +1,10 @@
+Description= instance to serve esystem api
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+ExecStart=/eSystem/server/cmd/server/esystem
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Social_Media_Credential cascade;

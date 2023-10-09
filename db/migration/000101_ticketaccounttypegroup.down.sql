@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS Ticket_Account_Type_Group cascade;

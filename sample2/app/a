@@ -1,0 +1,54 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"sync"
+	"time"
+)
+
+func main() {
+	bufferWorker := make(chan string, 3)
+	done := make(chan bool)
+	var wg sync.WaitGroup
+
+	ls := []string{}
+	for i := 0; i <= 20; i++ {
+		ls = append(ls, fmt.Sprintf("item: %v", i))
+	}
+
+	go func() {
+		for l := range bufferWorker {
+			wg.Add(1)
+
+			go func(str string) {
+				defer wg.Done()
+
+				// creating csv
+				time.Sleep(time.Second * 2)
+				// creating zip
+				time.Sleep(time.Second * 2)
+				// sending zip
+				time.Sleep(time.Second * 2)
+				log.Printf("Processed: %v ", str)
+			}(l)
+		}
+
+		done <- true // Notify completion of item processing
+	}()
+
+	for _, l := range ls {
+		bufferWorker <- l
+	}
+
+	close(bufferWorker)
+
+	go func() {
+		wg.Wait()
+		close(done) // Notify completion of wait group
+	}()
+
+	<-done // Wait for completion of item processing
+
+	log.Println("Completed")
+}

@@ -1,0 +1,35 @@
+syntax = "proto3";
+package simplebank;
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+import "google/protobuf/timestamp.proto";
+
+import "processor_message.proto";
+import "memory_message.proto";
+import "storage_message.proto";
+import "screen_message.proto";
+import "keyboard_message.proto";
+// import "google/protobuf/timestamp.proto";
+// import "type_message.proto";
+
+message Laptop {
+  int64 id = 1;
+  string uuid = 3;
+  int64 brandId = 4;
+  string brand = 5;
+  string name = 6;
+  CPU cpu = 7;
+  Memory ram = 8;
+  repeated GPU gpus = 9;
+  repeated StorageSize storages = 10;
+  Screen screen = 11;
+  Keyboard keyboard = 12;
+  oneof weight {
+    double weight_kg = 13;
+    double weight_lb = 14;
+  }
+  double price_usd = 15;
+  uint32 release_year = 16;
+  google.protobuf.Timestamp updated_at = 17;
+}

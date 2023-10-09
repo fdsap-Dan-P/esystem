@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS System_Config cascade;

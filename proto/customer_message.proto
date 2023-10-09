@@ -1,0 +1,76 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message Customer {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 iiid = 3;
+  int64 centralOfficeId = 4;
+  int64 cid = 5;
+  string customerAltId = 6;
+  double debitLimit = 7;
+  double creditLimit = 8;
+  google.protobuf.Timestamp dateEntry = 9;
+  google.protobuf.Timestamp lastActivityDate = 10;
+  bool dosri = 11;
+  int64 classificationId = 12;
+  string classification = 13;
+  int64 subClassificationId = 14;
+  string subClassification = 15;
+  int64 centerId = 16;
+  int64 centerCode = 17;
+  string centerShortName = 18;
+  string centerName = 19;
+  int64 officeId = 20;
+  string officeName = 21;
+  int64 restrictionId = 22;
+  int64 restrictionCode = 23;
+  string restriction = 24;
+  int64 riskClassId = 25;
+  int64 riskClassCode = 26;
+  string riskClass = 27;
+  int64 industryId = 28;
+  int64 industryCode = 29;
+  string industry = 30;
+  int64 statusCode = 31;
+  int64 status = 32;
+  NullString otherInfo = 33;
+}
+
+message CustomerBeneficiary {
+  string uuid = 1;
+  int64 customerId = 2;
+  int32 series = 3;
+  int64 iiid = 4;
+  int64 typeId = 5;
+  int64 relationTypeId = 6;
+  NullString otherInfo = 7;
+}
+
+message CustomerGroup {
+  int64 id = 1;
+  string uuid = 2;
+  int64 centralId = 3;
+  string code = 4;
+  int64 typeId = 5;
+  string groupName = 6;
+  string shortName = 7;
+  google.protobuf.Timestamp dateStablished = 8;
+  int32 meetingDay = 9;
+  int64 officeId = 10;
+  int64 officerId = 11;
+  int64 parentId = 12;
+  string alternateId = 13;
+  string addressDetail = 14;
+  string addressUrl = 15;
+  int64 geographyId = 16;
+  NullString otherInfo = 17;
+}

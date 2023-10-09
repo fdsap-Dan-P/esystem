@@ -1,0 +1,18 @@
+syntax = "proto3";
+package simplebank;
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+// The request message containing the Login name and Password
+message LoginRequest {
+  string loginName = 1;
+  string password = 2;
+}
+
+// The response message containing the access token
+message LoginResponse { 
+  string access_token = 1; 
+}
+

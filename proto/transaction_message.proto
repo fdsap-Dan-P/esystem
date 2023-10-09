@@ -1,0 +1,161 @@
+syntax = "proto3";
+package simplebank;
+// import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pb";
+option java_package = "com.fdsap.simplebank.pb";
+option java_multiple_files = true;
+
+import "type_message.proto";
+
+message ActionTicket {
+  string uuid = 1;
+  int64 ticketId = 2;
+  int64 typeId = 3;
+  int64 userId = 4;
+  google.protobuf.Timestamp actionTicketDate = 5;
+  string reference = 6;
+  string remarks = 7;
+  NullString otherInfo = 8;
+}
+
+message CustomerEvent {
+  string uuid = 1;
+  int64 trnHeadId = 2;
+  int64 customerId = 3;
+  int64 typeId = 4;
+  string remarks = 5;
+  NullString otherInfo = 6;
+}
+
+message EmployeeEvent {
+  string uuid = 1;
+  int64 employeeId = 2;
+  int64 ticketId = 3;
+  int64 typeId = 4;
+  int64 officeId = 5;
+  int64 positionId = 6;
+  string basicPay = 7;
+  int64 statusId = 8;
+  int32 jobGrade = 9;
+  int32 jobStep = 10;
+  int64 levelId = 11;
+  int64 employeeTypeId = 12;
+  string remarks = 13;
+  NullString otherInfo = 14;
+}
+
+message Entries {
+  int64 iD = 1;
+  int64 accountId = 2;
+  string amount = 3;
+  google.protobuf.Timestamp createdAt = 4;
+}
+
+message JournalDetail {
+  string uuid = 1;
+  int64 trnHeadId = 2;
+  int32 series = 3;
+  int64 officeId = 4;
+  int64 coaId = 5;
+  int64 accountTypeId = 6;
+  string currency = 7;
+  int64 partitionId = 8;
+  string trnAmt = 9;
+  NullString otherInfo = 10;
+}
+
+message OfficeAccountTran {
+  string uuid = 1;
+  int64 trnHeadId = 2;
+  int64 series = 3;
+  int64 officeAccountId = 4;
+  string trnAmt = 5;
+  NullString otherInfo = 6;
+}
+
+message Ticket {
+  int64 iD = 1;
+  string uuid = 2;
+  google.protobuf.Timestamp ticketDate = 3;
+  int64 typeId = 4;
+  int64 postedbyId = 5;
+  int64 statusId = 6;
+  string remarks = 7;
+  NullString otherInfo = 8;
+}
+
+message Transfers {
+  int64 iD = 1;
+  int64 fromAccountId = 2;
+  int64 toAccountId = 3;
+  string amount = 4;
+  google.protobuf.Timestamp createdAt = 5;
+}
+
+message TrnAction {
+  string uuid = 1;
+  int64 trnHeadId = 2;
+  int64 typeId = 3;
+  int64 userId = 4;
+  google.protobuf.Timestamp trnActionDate = 5;
+  string reference = 6;
+  string remarks = 7;
+  NullString otherInfo = 8;
+}
+
+message TrnHead {
+  int64 iD = 1;
+  string uuid = 2;
+  int64 ticketId = 3;
+  google.protobuf.Timestamp trnDate = 4;
+  int64 trn = 5;
+  int64 typeId = 6;
+  int64 officeId = 7;
+  int64 userId = 8;
+  int64 transactingId = 9;
+  string orno = 10;
+  bool isfinal = 11;
+  bool ismanual = 12;
+  string alternateTrn = 13;
+  string reference = 14;
+  string remarks = 15;
+  NullString otherInfo = 16;
+}
+
+message TrnHeadRelation {
+  string uuid = 1;
+  int64 trnHeadId = 2;
+  int64 relatedId = 3;
+  int64 typeId = 4;
+  string remarks = 5;
+  NullString otherInfo = 6;
+}
+
+message AccountQuantityTran {
+  string uuid = 1;
+  int64 trnHeadId = 2;
+  int64 series = 3;
+  int64 accountQuantityId = 4;
+  string quantity = 5;
+  string unitPrice = 6;
+  string discount = 7;
+  string taxAmt = 8;
+  string netTrnAmt = 9;
+  NullString otherInfo = 10;
+}
+
+message AccountTran {
+  string uuid = 1;
+  int64 trnHeadId = 2;
+  int64 series = 3;
+  google.protobuf.Timestamp valueDate = 4;
+  int64 accountId = 5;
+  string currency = 6;
+  int64 itemId = 7;
+  bool passbookPosted = 8;
+  string trnPrin = 9;
+  string trnInt = 10;
+  NullString otherInfo = 11;
+}

@@ -1,0 +1,237 @@
+
+
+WITH dt as
+ (SELECT '2023-03-01'::Date PreDate1, '2023-03-31'::Date PreDate2, '2023-04-01'::Date CurDate1, '2023-04-30'::Date CurDate2) 
+SELECT 
+  branch_desc, 
+  1 Client,
+  CASE WHEN CID is null THEN 1 ELSE 0 END NonRegistered,
+  CASE WHEN client_status = 'ACTIVE' THEN 1 ELSE 0 END Active,
+  CASE WHEN client_status = 'INACTIVE' THEN 1 ELSE 0 END INACTIVE,
+  CASE WHEN client_status LIKE 'BLOCKED%' THEN 1 ELSE 0 END BLOCKED,
+  InquiryCtr, SelfeLoadCtr, eLoadCtr, OtherCtr,
+  SelfeLoadAmt, eLoadAmt, OtherAmt, 
+  SelfeLoadCtrPrev, eLoadCtrPrev, 
+  SelfeLoadCtrCur, eLoadCtrCur, 
+  SelfeLoadAmtPrev, eLoadAmtPrev,
+  SelfeLoadAmtCur, eLoadAmtCur into TranApr2023
+FROM 
+  (SELECT cid, max(branch_code) branch_code, Max(client_status) client_status  FROM m_client GROUP BY cid) c 
+FULL JOIN 
+ (SELECT 
+    Cust_CID, COALESCE (b.branch_desc,'') branch_desc,
+    Sum(CASE WHEN typ.grpType = 'Inquiry' and trans_status = 'SUCCESSFUL' THEN 1 ELSE 0 END) InquiryCtr,
+    Sum(CASE WHEN typ.grpType = 'SELF_E_LOAD' and trans_status = 'SUCCESSFUL' THEN 1 ELSE 0 END) SelfeLoadCtr,
+    Sum(CASE WHEN typ.grpType = 'E_LOAD'      and trans_status = 'SUCCESSFUL' THEN 1 ELSE 0 END) eLoadCtr,
+    Sum(CASE WHEN typ.grpType = 'Other' and trans_status = 'SUCCESSFUL' THEN 1 ELSE 0 END) OtherCtr,
+    Sum(CASE WHEN typ.grpType = 'SELF_E_LOAD' and trans_status = 'SUCCESSFUL' THEN trans_amount ELSE 0 END) SelfeLoadAmt,
+    Sum(CASE WHEN typ.grpType = 'E_LOAD'      and trans_status = 'SUCCESSFUL' THEN trans_amount ELSE 0 END) eLoadAmt,
+    Sum(CASE WHEN typ.grpType = 'Other' and trans_status = 'SUCCESSFUL' THEN trans_amount ELSE 0 END) OtherAmt,
+
+    Sum(CASE WHEN typ.grpType = 'SELF_E_LOAD' and t.trans_date >= PreDate1 and t.trans_date <= PreDate2 THEN 1 ELSE 0 END) SelfeLoadCtrPrev,
+    Sum(CASE WHEN typ.grpType = 'E_LOAD' and t.trans_date >= PreDate1 and t.trans_date <= PreDate2 THEN 1 ELSE 0 END) eLoadCtrPrev,
+    Sum(CASE WHEN typ.grpType = 'SELF_E_LOAD' and t.trans_date >= CurDate1 and t.trans_date <= CurDate2 THEN 1 ELSE 0 END) SelfeLoadCtrCur,
+    Sum(CASE WHEN typ.grpType = 'E_LOAD' and t.trans_date >= CurDate1 and t.trans_date <= CurDate2 THEN 1 ELSE 0 END) eLoadCtrCur,
+    Sum(CASE WHEN typ.grpType = 'SELF_E_LOAD' and t.trans_date >= PreDate1 and t.trans_date <= PreDate2 THEN trans_amount ELSE 0 END) SelfeLoadAmtPrev,
+    Sum(CASE WHEN typ.grpType = 'E_LOAD' and t.trans_date >= PreDate1 and t.trans_date <= PreDate2 THEN trans_amount ELSE 0 END) eLoadAmtPrev,
+    Sum(CASE WHEN typ.grpType = 'SELF_E_LOAD' and t.trans_date >= CurDate1 and t.trans_date <= CurDate2 THEN trans_amount ELSE 0 END) SelfeLoadAmtCur,
+    Sum(CASE WHEN typ.grpType = 'E_LOAD' and t.trans_date >= CurDate1 and t.trans_date <= CurDate2 THEN trans_amount ELSE 0 END) eLoadAmtCur
+    
+  FROM t_trans_finance t  
+  INNER JOIN m_client mc on mc.client_id  = t.client_id 
+  LEFT JOIN m_branch b on mc.branch_code = b.branch_code 
+  LEFT JOIN 
+  (VALUES
+    ('E_LOAD','E_LOAD'),
+    ('SELF_E_LOAD','SELF_E_LOAD'),
+    ('BALANCE_INQUERY','Inquiry'),
+    ('E_STATEMENT','Inquiry'),
+    ('TRANS_HISTORY','Inquiry'),
+    ('YOUR_BILLS','Inquiry'),
+    ('AIP','Other'),
+    ('BILLS_PAYMENT','Other'),
+    ('CASH_IN','Other'),
+    ('CASH_OUT','Other'),
+    ('CIP','Other'),
+    ('FUND_TRANSFER','Other'),
+    ('KONEK2PAY','Other'),
+    ('MINI_STATEMENT','Other'),
+    ('RF_KONEK2PAY','Other'),
+    ('CANCEL_REMITTANCE','Other'),
+    ('CLAIM_REMITTANCE','Other'),
+    ('IBFT_QR','Other'),
+    ('IBFT_REG','Other'),
+    ('SELF_REMITTANCE','Other'),
+    ('SEND_REMITTANCE','Other'),
+    ('SKP','Other')
+  ) typ(trnType, grpType) on typ.trnType = t.trans_type, dt
+  GROUP BY Cust_CID, COALESCE(b.branch_desc,'')
+  ) t  on t.Cust_CID = c.cid;
+--  WHERE t.cust_cid  = '1030059132'
+
+     
+
+     
+
+  
+  SELECT 
+  i.inst_desc, Branch_desc,
+  Sum(Client) Client,
+  Sum(NonRegistered) NonRegistered,
+  Sum(Active) Active,
+  Sum(INACTIVE) INACTIVE,
+  Sum(BLOCKED) BLOCKED,
+  Sum(CASE WHEN InquiryCtr > 0 THEN 1 ELSE 0 END) InquiryCtr, 
+  Sum(SelfeLoadCtr) SelfeLoadCtr, 
+  Sum(eLoadCtr) eLoadCtr, 
+  Sum(OtherCtr) OtherCtr,
+  Sum(SelfeLoadAmt) SelfeLoadAmt, 
+  Sum(eLoadAmt) eLoadAmt, 
+  Sum(OtherAmt) OtherAmt, 
+  Sum(SelfeLoadCtrPrev) SelfeLoadCtrPrev, 
+  Sum(eLoadCtrPrev) eLoadCtrPrev, 
+  Sum(SelfeLoadCtrCur) SelfeLoadCtrCur, 
+  Sum(eLoadCtrCur) eLoadCtrCur, 
+  Sum(SelfeLoadAmtPrev) SelfeLoadAmtPrev, 
+  Sum(eLoadAmtPrev) eLoadAmtPrev,
+  Sum(SelfeLoadAmtCur) SelfeLoadAmtCur, 
+  Sum(eLoadAmtCur) eLoadAmtCur,
+  Sum(CASE WHEN SelfeLoadCtr > 0 THEN 1 ELSE 0 END) UniqueSelfeLoadCtr, 
+  Sum(CASE WHEN eLoadCtr > 0 THEN 1 ELSE 0 END) UniqueeLoadCtr, 
+  Sum(CASE WHEN OtherCtr > 0 THEN 1 ELSE 0 END) UniqueOtherCtr,
+  Sum(CASE WHEN SelfeLoadCtrPrev > 0 THEN 1 ELSE 0 END) UniqueSelfeLoadPrev,
+  Sum(CASE WHEN eLoadCtrPrev > 0 THEN 1 ELSE 0 END) UniqueeLoadPrev,
+  Sum(CASE WHEN SelfeLoadCtrCur > 0 THEN 1 ELSE 0 END) UniqueSelfeLoadCur,
+  Sum(CASE WHEN eLoadCtrCur > 0 THEN 1 ELSE 0 END) UniqueeLoadCur,
+  Sum(CASE WHEN eLoadCtrCur > 0 and NonRegistered = 1 THEN 1 ELSE 0 END) NonRegUniqueeLoadCur
+FROM TranApr2023 t, m_institution i
+GROUP BY Branch_Desc, i.inst_desc
+;
+
+
+  --  select * from TranJan2023
+  
+SELECT 
+  inst_desc, to_char(MinTrnDate, 'yyyy-mm-dd') MinTrnDate,
+  to_char(MaxTrnDate, 'yyyy-mm-dd') MaxTrnDate,
+  to_char(MinTrnDateTrn, 'yyyy-mm-dd') MinTrnDateTrn,
+  to_char(MaxTrnDateTrn, 'yyyy-mm-dd') MaxTrnDateTrn,
+  Count(client_id)     
+FROM
+  (SELECT 
+    client_id, i.inst_desc,
+    Min(trans_date) MinTrnDate, Max(trans_date) MaxTrnDate,
+    Min(CASE WHEN trans_amount > 0 THEN trans_date ELSE '2099-01-01'::date END) MinTrnDateTrn,
+    Max(CASE WHEN trans_amount > 0 THEN trans_date ELSE '1900-01-01'::date END) MaxTrnDateTrn  
+  FROM t_trans_finance t, m_institution i
+  WHERE trans_status = 'SUCCESSFUL'
+  GROUP BY client_id, i.inst_desc) d
+GROUP BY
+inst_desc, to_char(MinTrnDate, 'yyyy-mm-dd'),
+to_char(MaxTrnDate, 'yyyy-mm-dd'),
+to_char(MinTrnDateTrn, 'yyyy-mm-dd'),
+to_char(MaxTrnDateTrn, 'yyyy-mm-dd') 
+
+
+
+select * 
+from
+ (VALUES
+('813','Smart'),
+('895','Dito'),
+('896','Dito'),
+('897','Dito'),
+('898','Dito'),
+('991','Dito'),
+('993','Dito'),
+('817','Globe'),
+('904','Globe'),
+('905','Globe'),
+('906','Globe'),
+('915','Globe'),
+('916','Globe'),
+('917','Globe'),
+('926','Globe'),
+('927','Globe'),
+('935','Globe'),
+('936','Globe'),
+('937','Globe'),
+('945','Globe'),
+('953','Globe'),
+('954','Globe'),
+('955','Globe'),
+('956','Globe'),
+('963','Globe'),
+('964','Globe'),
+('965','Globe'),
+('966','Globe'),
+('967','Globe'),
+('975','Globe'),
+('976','Globe'),
+('977','Globe'),
+('994','Globe'),
+('995','Globe'),
+('996','Globe'),
+('997','Globe'),
+('900','Smart'),
+('907','Smart'),
+('908','Smart'),
+('909','Smart'),
+('910','Smart'),
+('911','Smart'),
+('912','Smart'),
+('913','Smart'),
+('914','Smart'),
+('918','Smart'),
+('919','Smart'),
+('920','Smart'),
+('921','Smart'),
+('922','Smart'),
+('923','Smart'),
+('924','Smart'),
+('925','Smart'),
+('928','Smart'),
+('929','Smart'),
+('930','Smart'),
+('931','Smart'),
+('932','Smart'),
+('933','Smart'),
+('934','Smart'),
+('938','Smart'),
+('939','Smart'),
+('940','Smart'),
+('941','Smart'),
+('942','Smart'),
+('943','Smart'),
+('944','Smart'),
+('946','Smart'),
+('947','Smart'),
+('948','Smart'),
+('949','Smart'),
+('950','Smart'),
+('951','Smart'),
+('952','Smart'),
+('957','Smart'),
+('958','Smart'),
+('959','Smart'),
+('960','Smart'),
+('961','Smart'),
+('962','Smart'),
+('968','Smart'),
+('969','Smart'),
+('970','Smart'),
+('971','Smart'),
+('972','Smart'),
+('973','Smart'),
+('974','Smart'),
+('978','Smart'),
+('979','Smart'),
+('980','Smart'),
+('981','Smart'),
+('982','Smart'),
+('985','Smart'),
+('989','Smart'),
+('992','Smart'),
+('998','Smart'),
+('999','Smart')
+) tel(pre,telco)

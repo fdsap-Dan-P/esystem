@@ -1,0 +1,35 @@
+package dwhcb
+
+import (
+	"database/sql"
+	"log"
+	"os"
+	identity "simplebank/db/datastore/identity"
+	"testing"
+
+	"simplebank/util"
+
+	_ "github.com/ibmdb/go_ibm_db"
+	// _ "bitbucket.org/phiggins/db2cli"
+)
+
+var testQueriesCustomer *QueriesCustomer
+var testQueriesIdentity *identity.QueriesIdentity
+var testDB *sql.DB
+
+func TestMain(m *testing.M) {
+	config, err := util.LoadConfig("../../..")
+	if err != nil {
+		log.Fatal("cannot load config:", err)
+	}
+
+	testDB, err = sql.Open("go_ibm_db", config.DB2DWHCB)
+	if err != nil {
+		log.Fatal("cannot connect to db:", err)
+	}
+
+	testQueriesCustomer = New(testDB)
+	testQueriesIdentity = identity.New(testDB)
+
+	os.Exit(m.Run())
+}
